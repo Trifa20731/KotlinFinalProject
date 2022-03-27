@@ -1,10 +1,17 @@
 package com.example.android.politicalpreparedness.election
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
-import com.example.android.politicalpreparedness.database.ElectionDao
+import com.example.android.politicalpreparedness.database.ElectionDatabase
 
-class VoterInfoViewModel(private val dataSource: ElectionDao) : ViewModel() {
+class VoterInfoViewModel(
+    private val application: Application,
+    private val dataSource: ElectionDatabase
+    ) : ViewModel() {
 
+    companion object {
+        const val LOG_TAG: String = "VoterInfoViewModel"
+    }
     //TODO: Add live data to hold voter info
 
     //TODO: Add var and methods to populate voter info

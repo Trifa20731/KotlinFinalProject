@@ -8,6 +8,10 @@ import androidx.fragment.app.Fragment
 
 class ElectionsFragment: Fragment() {
 
+    companion object {
+        const val LOG_TAG: String = "ElectionsFragment"
+    }
+
     //TODO: Declare ViewModel
 
     override fun onCreateView(inflater: LayoutInflater,

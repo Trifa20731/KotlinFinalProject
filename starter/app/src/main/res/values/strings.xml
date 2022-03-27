@@ -2,6 +2,12 @@
 <resources>
     <string name="app_name">Political Preparedness</string>
 
-    <!-- TODO: Add necessary string values -->
+    <!-- Launch Fragment -->
+    <string name="app_cover_image_view_description">The Logo Of App</string>
+    <string name="upcoming_election_btn_label">Upcoming Elections</string>
+    <string name="find_my_representatives_btn_label">Find My Representatives</string>
+
+    <!-- Exception Message -->
+    <string name="unknown_view_model_exception">Unknown View Model class when create main VM.</string>
 
 </resources>
