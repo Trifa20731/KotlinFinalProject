@@ -1,10 +1,14 @@
 package com.example.android.politicalpreparedness.election
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 
 class ElectionsFragment: Fragment() {
 
@@ -12,11 +16,18 @@ class ElectionsFragment: Fragment() {
         const val LOG_TAG: String = "ElectionsFragment"
     }
 
+    private lateinit var binding: FragmentElectionBinding
+    private lateinit var application: Application
+    private lateinit var viewModel: ElectionsViewModel
+    private lateinit var viewModelFactory: ElectionsViewModelFactory
+
     //TODO: Declare ViewModel
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)
 
         //TODO: Add ViewModel values and create ViewModel
 
@@ -28,6 +39,7 @@ class ElectionsFragment: Fragment() {
 
         //TODO: Populate recycler adapters
 
+        return binding.root
     }
 
     //TODO: Refresh adapters when fragment loads

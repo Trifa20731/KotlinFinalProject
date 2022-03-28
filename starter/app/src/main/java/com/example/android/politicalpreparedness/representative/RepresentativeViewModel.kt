@@ -1,8 +1,15 @@
 package com.example.android.politicalpreparedness.representative
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 
-class RepresentativeViewModel: ViewModel() {
+class RepresentativeViewModel(
+    private val application: Application
+): ViewModel() {
+
+    companion object {
+        const val LOG_TAG: String = "RepresentativeViewModel"
+    }
 
     //TODO: Establish live data for representatives and address
 
