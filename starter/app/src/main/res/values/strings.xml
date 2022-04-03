@@ -7,6 +7,14 @@
     <string name="upcoming_election_btn_label">Upcoming Elections</string>
     <string name="find_my_representatives_btn_label">Find My Representatives</string>
 
+    <!-- Election Fragment -->
+    <string name="upcoming_elections_tv_label">Upcoming Elections</string>
+    <string name="saved_elections_tv_label">Saved Election</string>
+
+    <!-- Representative Fragment -->
+    <string name="permission_denied_explanation">You need to grant location permission in order to select the location.</string>
+    <string name="settings">Settings</string>
+
     <!-- Exception Message -->
     <string name="unknown_view_model_exception">Unknown View Model class when create main VM.</string>
 

@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 
 class ElectionsFragment: Fragment() {
@@ -21,15 +23,15 @@ class ElectionsFragment: Fragment() {
     private lateinit var viewModel: ElectionsViewModel
     private lateinit var viewModelFactory: ElectionsViewModelFactory
 
-    //TODO: Declare ViewModel
-
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)
+        application = requireNotNull(this.activity).application
 
-        //TODO: Add ViewModel values and create ViewModel
+        // Add ViewModel values and create ViewModel
+        initViewModelAndLifeCycleOwner()
 
         //TODO: Add binding values
 
@@ -42,6 +44,22 @@ class ElectionsFragment: Fragment() {
         return binding.root
     }
 
+    private fun initViewModelAndLifeCycleOwner() {
+        viewModelFactory = ElectionsViewModelFactory(application, ElectionDatabase.getInstance(application))
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ElectionsViewModel::class.java)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+    }
+
+    private fun initObserver() {
+
+    }
+
+    private fun initAdapter() {
+
+    }
+
     //TODO: Refresh adapters when fragment loads
+
 
 }

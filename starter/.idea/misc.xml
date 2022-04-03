@@ -4,11 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/activity_main.xml" value="0.25181159420289856" />
-        <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/fragment_election.xml" value="0.25625" />
+        <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/fragment_election.xml" value="0.5" />
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/fragment_launch.xml" value="0.25625" />
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/fragment_representative.xml" value="0.25625" />
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/fragment_voter_info.xml" value="0.25625" />
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/list_item_election.xml" value="0.2421875" />
+        <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/list_item_representative.xml" value="0.20625" />
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/menu/voterinfo_menu.xml" value="0.25625" />
       </map>
     </option>
