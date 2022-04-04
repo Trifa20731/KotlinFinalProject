@@ -28,7 +28,6 @@ import java.util.Locale
 class RepresentativeFragment : Fragment() {
 
     companion object {
-        //TODO: Add Constant for Location request
         const val LOG_TAG: String = "RepresentativeFragment"
     }
 
@@ -45,7 +44,7 @@ class RepresentativeFragment : Fragment() {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_election, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
         application = requireNotNull(this.activity).application
 
         //TODO: Establish bindings

@@ -11,4 +11,9 @@ object Constants {
     const val LOCATION_PERMISSION_INDEX = 0
     const val BACKGROUND_LOCATION_PERMISSION_INDEX = 1
 
+    // CivicsApiService.
+    const val ELECTIONS_QUERY_PATH: String = "elections"
+    const val VOTER_INFO_QUERY_PATH: String = "voterinfo"
+    const val REPRESENTATIVE_PATH: String = "representatives"
+
 }

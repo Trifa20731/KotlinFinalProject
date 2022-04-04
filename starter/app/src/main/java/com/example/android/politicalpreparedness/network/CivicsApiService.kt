@@ -1,10 +1,12 @@
 package com.example.android.politicalpreparedness.network
 
+import com.example.android.politicalpreparedness.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.GET
 
 private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
 
@@ -25,11 +27,25 @@ private val retrofit = Retrofit.Builder()
  */
 
 interface CivicsApiService {
-    //TODO: Add elections API Call
+
+    //TODO: Add elections API Cal
+    @GET(Constants.ELECTIONS_QUERY_PATH)
+    suspend fun getElectionsListAsync() {
+
+    }
 
     //TODO: Add voterinfo API Call
+    @GET(Constants.VOTER_INFO_QUERY_PATH)
+    suspend fun getVoterInfoListAsync() {
+
+    }
 
     //TODO: Add representatives API Call
+    @GET(Constants.REPRESENTATIVE_PATH)
+    suspend fun getRepresentativesByAddressAsync() {
+
+    }
+
 }
 
 object CivicsApi {
