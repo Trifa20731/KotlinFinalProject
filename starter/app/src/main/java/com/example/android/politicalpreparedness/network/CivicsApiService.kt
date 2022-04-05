@@ -1,19 +1,25 @@
 package com.example.android.politicalpreparedness.network
 
 import com.example.android.politicalpreparedness.Constants
+import com.example.android.politicalpreparedness.network.jsonadapter.ElectionAdapter
+import com.example.android.politicalpreparedness.network.models.ElectionResponse
+import com.example.android.politicalpreparedness.network.models.RepresentativeResponse
+import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://www.googleapis.com/civicinfo/v2/"
 
 // TODO: Add adapters for Java Date and custom adapter ElectionAdapter (included in project)
 private val moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
+    .add(ElectionAdapter())
+    .add(KotlinJsonAdapterFactory())
+    .build()
 
 private val retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -28,23 +34,23 @@ private val retrofit = Retrofit.Builder()
 
 interface CivicsApiService {
 
-    //TODO: Add elections API Cal
+    // Add elections API Cal
     @GET(Constants.ELECTIONS_QUERY_PATH)
-    suspend fun getElectionsListAsync() {
+    suspend fun getElectionsListAsync(): ElectionResponse
 
-    }
-
-    //TODO: Add voterinfo API Call
+    // Add voterinfo API Call
     @GET(Constants.VOTER_INFO_QUERY_PATH)
-    suspend fun getVoterInfoListAsync() {
+    suspend fun getVoterInfoListAsync(
+        @Query("address") address: String,
+        @Query("electionId") electionId: Long,
+        @Query("officialOnly") officialOnly: Boolean
+    ): VoterInfoResponse
 
-    }
-
-    //TODO: Add representatives API Call
+    // Add representatives API Call
     @GET(Constants.REPRESENTATIVE_PATH)
-    suspend fun getRepresentativesByAddressAsync() {
-
-    }
+    suspend fun getRepresentativesByAddressAsync(
+        @Query("address") address: String
+    ): RepresentativeResponse
 
 }
 

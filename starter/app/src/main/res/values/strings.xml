@@ -12,6 +12,14 @@
     <string name="saved_elections_tv_label">Saved Election</string>
 
     <!-- Representative Fragment -->
+    <string name="representative_search_tv_label">Representative Search</string>
+    <string name="my_representative_tv_label">My Representatives</string>
+    <string name="find_my_representative_btn_label">Find My Representatives</string>
+    <string name="use_my_location_btn_label">Use My Location</string>
+    <string name="address_line_one_hint">Address Line 1</string>
+    <string name="address_line_two_hint">Address Line 2</string>
+    <string name="city_hint">City</string>
+    <string name="zip_hint">Zip</string>
     <string name="permission_denied_explanation">You need to grant location permission in order to select the location.</string>
     <string name="settings">Settings</string>
 

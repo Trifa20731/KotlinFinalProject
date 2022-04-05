@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.databinding.ListItemElectionBinding
 import com.example.android.politicalpreparedness.network.models.Election
 
-class ElectionViewHolder private constructor(val binding: ListItemElectionBinding): RecyclerView.ViewHolder(binding.root) {
+class ElectionViewHolder private constructor(val binding: ListItemElectionBinding):
+    RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: Election) {
+    fun bind(clickListener: ElectionClickListener, item: Election) {
         binding.election = item
+        binding.clickListener = clickListener
         binding.executePendingBindings()
     }
 

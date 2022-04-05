@@ -2,6 +2,7 @@ package com.example.android.politicalpreparedness.election
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
+import com.example.android.politicalpreparedness.election.adapter.ElectionClickListener
+import com.example.android.politicalpreparedness.network.jsonadapter.ElectionAdapter
 
 class ElectionsFragment: Fragment() {
 
@@ -22,6 +25,7 @@ class ElectionsFragment: Fragment() {
     private lateinit var application: Application
     private lateinit var viewModel: ElectionsViewModel
     private lateinit var viewModelFactory: ElectionsViewModelFactory
+    private lateinit var electionAdapter: ElectionAdapter
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -44,6 +48,10 @@ class ElectionsFragment: Fragment() {
         return binding.root
     }
 
+
+//------------------------------------- Initialization ---------------------------------------------
+
+
     private fun initViewModelAndLifeCycleOwner() {
         viewModelFactory = ElectionsViewModelFactory(application, ElectionDatabase.getInstance(application))
         viewModel = ViewModelProvider(this, viewModelFactory).get(ElectionsViewModel::class.java)
@@ -51,13 +59,15 @@ class ElectionsFragment: Fragment() {
         binding.lifecycleOwner = this
     }
 
+    private fun initAdapter() {
+
+    }
+
     private fun initObserver() {
 
     }
 
-    private fun initAdapter() {
 
-    }
 
     //TODO: Refresh adapters when fragment loads
 

@@ -17,6 +17,11 @@ class ElectionsViewModel(
         const val LOG_TAG: String = "ElectionsViewModel"
     }
 
+    // The navigation action to detail page.
+    private val _navigateToDetail = MutableLiveData<Election?>()
+    val navigateToDetail: LiveData<Election?>
+        get() = _navigateToDetail
+
     // Create live data val for upcoming elections
     private val _upcomingElections =  MutableLiveData<List<Election>>()
     val upcomingElection: LiveData<List<Election>>
@@ -26,6 +31,41 @@ class ElectionsViewModel(
     private val _savedElections = MutableLiveData<List<Election>>()
     val savedElections: LiveData<List<Election>>
         get() = _savedElections
+
+
+//------------------------------------- Initialization ---------------------------------------------
+
+
+    /**
+     * Init Block: To get data from Internet.
+     * */
+    init {
+        //getAppDataProperty()
+    }
+    //val responseAsteroidList = dataSource.electionDao.selectElections()
+
+
+//------------------------------------- Data Retrieve Functions ------------------------------------
+
+
+
+
+//------------------------------------- Event Trigger Function -------------------------------------
+
+
+    /**
+     * Function will be called when list item has been clicked.
+     * */
+    fun onAsteroidClicked(election: Election) {
+        _navigateToDetail.value = election
+    }
+
+    /**
+     * Reset the parameter after navigation.
+     * */
+    fun doneNavigation() {
+        _navigateToDetail.value = null
+    }
 
     //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
 

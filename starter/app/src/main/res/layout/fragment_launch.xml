@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_large"
             android:contentDescription="@string/app_cover_image_view_description"
+            app:layout_constraintBottom_toTopOf="@+id/upcomingElectionsBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
