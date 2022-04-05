@@ -1,8 +1,11 @@
 package com.example.android.politicalpreparedness.election
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.politicalpreparedness.database.ElectionDatabase
+import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 
 class VoterInfoViewModel(
     private val application: Application,
@@ -12,6 +15,11 @@ class VoterInfoViewModel(
     companion object {
         const val LOG_TAG: String = "VoterInfoViewModel"
     }
+
+    private val _voterInfoResponse = MutableLiveData<VoterInfoResponse>()
+    val voterInfoResponse: LiveData<VoterInfoResponse>
+        get() = _voterInfoResponse
+
     //TODO: Add live data to hold voter info
 
     //TODO: Add var and methods to populate voter info

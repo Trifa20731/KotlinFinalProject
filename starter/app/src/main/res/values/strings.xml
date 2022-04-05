@@ -23,6 +23,9 @@
     <string name="permission_denied_explanation">You need to grant location permission in order to select the location.</string>
     <string name="settings">Settings</string>
 
+    <!-- Vote Information Fragment -->
+    <string name="default_election_tv_label">Default Election</string>
+
     <!-- Exception Message -->
     <string name="unknown_view_model_exception">Unknown View Model class when create main VM.</string>
 
