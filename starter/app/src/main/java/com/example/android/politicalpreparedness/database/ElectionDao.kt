@@ -11,6 +11,14 @@ import com.example.android.politicalpreparedness.network.models.Election
 interface ElectionDao {
 
     /**
+     * Insert All Election. If the Election already exists, replace it.
+     *
+     * @param elections
+     * */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllElections(vararg elections: Election)
+
+    /**
      * Insert Election. If the Election already exists, replace it.
      *
      * @param election the election to be inserted.

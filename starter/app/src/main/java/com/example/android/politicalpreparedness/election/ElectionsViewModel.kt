@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.repository.ElectionsRepository
 
 // Construct ViewModel and provide election datasource
 class ElectionsViewModel(
@@ -16,6 +17,8 @@ class ElectionsViewModel(
     companion object {
         const val LOG_TAG: String = "ElectionsViewModel"
     }
+
+    private val electionsRepo: ElectionsRepository = ElectionsRepository(dataSource)
 
     // The navigation action to detail page.
     private val _navigateToDetail = MutableLiveData<Election?>()
@@ -40,9 +43,9 @@ class ElectionsViewModel(
      * Init Block: To get data from Internet.
      * */
     init {
-        //getAppDataProperty()
+        getAppDataProperty()
     }
-    //val responseAsteroidList = dataSource.electionDao.selectElections()
+    val responseAsteroidList = electionsRepo.elections
 
 
 //------------------------------------- Data Retrieve Functions ------------------------------------
