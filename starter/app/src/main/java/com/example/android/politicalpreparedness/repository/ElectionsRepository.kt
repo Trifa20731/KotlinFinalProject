@@ -26,7 +26,9 @@ class ElectionsRepository(private val database: ElectionDatabase) {
             try {
                 Log.d(LOG_TAG, "try to get the election from Internet.")
                 val tmpResponse = CivicsApi.retrofitService.getElectionsListAsync()
-                //database.electionDao.insertAllElections(*(tmpResponse.elections).toTypedArray())
+                database.electionDao.insertAllElections(*(tmpResponse.elections).toTypedArray())
+
+
             } catch (e: Exception) {
                 Log.d(LOG_TAG, "get error message")
                 Log.d(LOG_TAG, e.message!!)
