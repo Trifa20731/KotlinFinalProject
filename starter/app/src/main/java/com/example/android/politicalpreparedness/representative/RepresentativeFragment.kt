@@ -18,7 +18,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.BuildConfig
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.politicalpreparedness.Constants
+import com.example.android.politicalpreparedness.utils.Constants
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address

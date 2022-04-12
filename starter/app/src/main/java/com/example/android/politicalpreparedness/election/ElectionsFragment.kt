@@ -2,18 +2,18 @@ package com.example.android.politicalpreparedness.election
 
 import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionClickListener
-import com.example.android.politicalpreparedness.network.jsonadapter.ElectionAdapter
+import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 
 class ElectionsFragment: Fragment() {
 
@@ -25,7 +25,7 @@ class ElectionsFragment: Fragment() {
     private lateinit var application: Application
     private lateinit var viewModel: ElectionsViewModel
     private lateinit var viewModelFactory: ElectionsViewModelFactory
-    private lateinit var electionAdapter: ElectionAdapter
+    private lateinit var electionListAdapter: ElectionListAdapter
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -41,7 +41,8 @@ class ElectionsFragment: Fragment() {
 
         //TODO: Link elections to voter info
 
-        //TODO: Initiate recycler adapters
+        // Initiate recycler adapters
+        initAdapter()
 
         //TODO: Populate recycler adapters
 
@@ -60,14 +61,14 @@ class ElectionsFragment: Fragment() {
     }
 
     private fun initAdapter() {
-
+        electionListAdapter = ElectionListAdapter(ElectionClickListener { election ->
+            viewModel.onElectionClicked(election)
+        })
     }
 
     private fun initObserver() {
-
+        viewModel.responseElectionsList.observe(viewLifecycleOwner, Observer { })
     }
-
-
 
     //TODO: Refresh adapters when fragment loads
 
