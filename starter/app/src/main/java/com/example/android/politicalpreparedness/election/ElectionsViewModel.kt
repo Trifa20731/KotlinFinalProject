@@ -1,12 +1,16 @@
 package com.example.android.politicalpreparedness.election
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.repository.ElectionsRepository
+import com.example.android.politicalpreparedness.utils.isNetworkAvailable
+import kotlinx.coroutines.launch
 
 // Construct ViewModel and provide election datasource
 class ElectionsViewModel(
@@ -35,6 +39,10 @@ class ElectionsViewModel(
     val savedElections: LiveData<List<Election>>
         get() = _savedElections
 
+    private val _stateInfoShowing = MutableLiveData<String>()
+    val stateInfoShowing: LiveData<String>
+        get() = _stateInfoShowing
+
 
 //------------------------------------- Initialization ---------------------------------------------
 
@@ -43,14 +51,42 @@ class ElectionsViewModel(
      * Init Block: To get data from Internet.
      * */
     init {
+        Log.d(LOG_TAG, "Initialization")
         getAppDataProperty()
     }
-    val responseAsteroidList = electionsRepo.elections
+    val responseElectionsList = electionsRepo.elections
+
 
 
 //------------------------------------- Data Retrieve Functions ------------------------------------
 
 
+    private fun getAppDataProperty() {
+        Log.d(LOG_TAG, "getAppDataProperty: run.")
+        if (isNetworkAvailable(application)) {
+            viewModelScope.launch {
+                try {
+                    Log.d(LOG_TAG, "Fetching Internet Data.")
+                    _stateInfoShowing.value = "Fetching Internet Data......"
+                    electionsRepo.refreshElections()
+                } catch (e: Exception) {
+                    Log.d(LOG_TAG, "Fetching Fail.")
+                    _stateInfoShowing.value = "Error Happen In Fetching Internet Data."
+                }
+            }
+        } else {
+            _stateInfoShowing.value = "No Internet Connection."
+        }
+    }
+
+    /**
+     * The function to refresh the data will be shown in the UI list.
+     *
+     * @param filter will be used to show some specific list item.
+     * */
+    fun refreshListData() {
+        _stateInfoShowing.value = "Refreshing List Data......"
+    }
 
 
 //------------------------------------- Event Trigger Function -------------------------------------
@@ -59,7 +95,7 @@ class ElectionsViewModel(
     /**
      * Function will be called when list item has been clicked.
      * */
-    fun onAsteroidClicked(election: Election) {
+    fun onElectionClicked(election: Election) {
         _navigateToDetail.value = election
     }
 

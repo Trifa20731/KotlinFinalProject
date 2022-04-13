@@ -1,4 +1,4 @@
-package com.example.android.politicalpreparedness
+package com.example.android.politicalpreparedness.utils
 
 object Constants {
 
