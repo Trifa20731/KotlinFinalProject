@@ -29,15 +29,9 @@ class ElectionsViewModel(
     val navigateToDetail: LiveData<Election?>
         get() = _navigateToDetail
 
-    // Create live data val for upcoming elections
-    private val _upcomingElections =  MutableLiveData<List<Election>>()
-    val upcomingElection: LiveData<List<Election>>
-        get() = _upcomingElections
-
-    // Create live data val for saved elections
-    private val _savedElections = MutableLiveData<List<Election>>()
-    val savedElections: LiveData<List<Election>>
-        get() = _savedElections
+    private val _electionShowingList = MutableLiveData<List<Election>>()
+    val electionsShowingList: LiveData<List<Election>>
+        get() = _electionShowingList
 
     private val _stateInfoShowing = MutableLiveData<String>()
     val stateInfoShowing: LiveData<String>
@@ -51,10 +45,9 @@ class ElectionsViewModel(
      * Init Block: To get data from Internet.
      * */
     init {
-        Log.d(LOG_TAG, "Initialization")
         getAppDataProperty()
     }
-    val responseElectionsList = electionsRepo.elections
+    val electionsResponseList = electionsRepo.elections
 
 
 
@@ -81,11 +74,10 @@ class ElectionsViewModel(
 
     /**
      * The function to refresh the data will be shown in the UI list.
-     *
-     * @param filter will be used to show some specific list item.
      * */
     fun refreshListData() {
         _stateInfoShowing.value = "Refreshing List Data......"
+        _electionShowingList.value = electionsResponseList.value
     }
 
 

@@ -14,6 +14,7 @@ import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionClickListener
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
+import com.example.android.politicalpreparedness.utils.SupportFunctions
 
 class ElectionsFragment: Fragment() {
 
@@ -43,6 +44,8 @@ class ElectionsFragment: Fragment() {
 
         // Initiate recycler adapters
         initAdapter()
+        // Initiate observer function
+        initObserver()
 
         //TODO: Populate recycler adapters
 
@@ -64,13 +67,20 @@ class ElectionsFragment: Fragment() {
         electionListAdapter = ElectionListAdapter(ElectionClickListener { election ->
             viewModel.onElectionClicked(election)
         })
+        binding.upcomingElectionsRv.adapter = electionListAdapter
     }
 
     private fun initObserver() {
-        viewModel.responseElectionsList.observe(viewLifecycleOwner, Observer { })
+        viewModel.stateInfoShowing.observe(viewLifecycleOwner, Observer { SupportFunctions.showShortToast(application, it) })
+        viewModel.electionsResponseList.observe(viewLifecycleOwner, Observer { updateShowingList() })
+        viewModel.electionsShowingList.observe(viewLifecycleOwner, Observer { electionListAdapter.submitList(it) })
     }
 
     //TODO: Refresh adapters when fragment loads
+
+    private fun updateShowingList() {
+        viewModel.refreshListData()
+    }
 
 
 }
