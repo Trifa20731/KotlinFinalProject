@@ -1,6 +1,8 @@
 package com.example.android.politicalpreparedness.utils
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.example.android.politicalpreparedness.network.models.ElectionResponse
 
 /**
@@ -15,6 +17,14 @@ object SupportFunctions {
         for (networkElection in electionResponse.elections) {
             Log.d(LOG_TAG_TMP_ELECTIONS_RESPONSE, "The id ${networkElection.id}, with name ${networkElection.name}, at ${networkElection.electionDay}, in division ${networkElection.division}")
         }
+    }
+
+    fun showShortToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun showLongToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
 }

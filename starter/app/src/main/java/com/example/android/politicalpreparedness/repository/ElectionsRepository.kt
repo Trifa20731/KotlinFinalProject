@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -27,11 +26,9 @@ class ElectionsRepository(private val database: ElectionDatabase) {
                 Log.d(LOG_TAG, "try to get the election from Internet.")
                 val tmpResponse = CivicsApi.retrofitService.getElectionsListAsync()
                 database.electionDao.insertAllElections(*(tmpResponse.elections).toTypedArray())
-
-
             } catch (e: Exception) {
-                Log.d(LOG_TAG, "get error message")
-                Log.d(LOG_TAG, e.message!!)
+                Log.e(LOG_TAG, "get error message")
+                Log.e(LOG_TAG, e.message!!)
             }
         }
     }
