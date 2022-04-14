@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.network.models.FollowedElection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -19,15 +20,27 @@ class ElectionsRepository(private val database: ElectionDatabase) {
     }
 
     val elections: LiveData<List<Election>> = database.electionDao.selectElections()
+    val followedElections: LiveData<List<FollowedElection>> = database.followedElectionDao.selectFollowedElections()
 
     suspend fun refreshElections() {
         withContext(Dispatchers.IO) {
             try {
-                Log.d(LOG_TAG, "try to get the election from Internet.")
+                Log.d(LOG_TAG, "refreshElection, try to get the election from Internet.")
                 val tmpResponse = CivicsApi.retrofitService.getElectionsListAsync()
                 database.electionDao.insertAllElections(*(tmpResponse.elections).toTypedArray())
             } catch (e: Exception) {
-                Log.e(LOG_TAG, "get error message")
+                Log.e(LOG_TAG, "refreshElection, get error message")
+                Log.e(LOG_TAG, e.message!!)
+            }
+        }
+    }
+
+    suspend fun refreshFollowedElections() {
+        withContext(Dispatchers.IO) {
+            try {
+                Log.d(LOG_TAG, "refreshFollowedElections, try to get the followed election.")
+            } catch (e: Exception) {
+                Log.e(LOG_TAG, "refreshFollowedElections, get error message")
                 Log.e(LOG_TAG, e.message!!)
             }
         }
