@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.databinding.ListItemElectionBinding
 import com.example.android.politicalpreparedness.network.models.Election
 
-class ElectionViewHolder private constructor(val binding: ListItemElectionBinding):
+class ElectionItemViewHolder private constructor(val binding: ListItemElectionBinding):
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(clickListener: ElectionClickListener, item: Election) {
@@ -16,10 +16,10 @@ class ElectionViewHolder private constructor(val binding: ListItemElectionBindin
     }
 
     companion object {
-        fun from(parent: ViewGroup): ElectionViewHolder {
+        fun from(parent: ViewGroup): ElectionItemViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = ListItemElectionBinding.inflate(layoutInflater, parent, false)
-            return ElectionViewHolder(binding)
+            return ElectionItemViewHolder(binding)
         }
     }
 
