@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
+import com.example.android.politicalpreparedness.network.models.Division
 
 class VoterInfoFragment : Fragment() {
 
@@ -31,10 +32,11 @@ class VoterInfoFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_voter_info, container, false)
         application = requireNotNull(this.activity).application
 
-        // Add ViewModel values and create ViewModel
-        initViewModelAndLifeCycleOwner()
-
-        //TODO: Add binding values
+        // Get the safe arg from the ElectionsFragment.
+        val args: VoterInfoFragmentArgs = VoterInfoFragmentArgs.fromBundle(requireArguments())
+        // Add ViewModel values and create ViewModel.
+        initViewModelAndLifeCycleOwner(args.argElectionId, args.argDivision)
+        // TODO: Add binding values
 
         //TODO: Populate voter info -- hide views without provided data.
         /**
@@ -55,12 +57,14 @@ class VoterInfoFragment : Fragment() {
 //------------------------------------- Intialization ----------------------------------------------
 
 
-    private fun initViewModelAndLifeCycleOwner() {
+    private fun initViewModelAndLifeCycleOwner(electionId: Int, division: Division) {
         viewModelFactory = VoterInfoViewModelFactory(application, ElectionDatabase.getInstance(application))
         viewModel = ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        viewModel.getElectionInfo(electionId)
     }
+
 
 
     //TODO: Create method to load URL intents
