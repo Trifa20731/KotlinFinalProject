@@ -2,6 +2,7 @@ package com.example.android.politicalpreparedness.election
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
@@ -65,7 +67,12 @@ class ElectionsFragment: Fragment() {
 
     private fun initAdapter() {
         electionListAdapter = ElectionListAdapter(ElectionClickListener { election ->
-            viewModel.onElectionClicked(election)
+            view!!
+                .findNavController()
+                .navigate(
+                    ElectionsFragmentDirections
+                        .actionElectionsFragmentToVoterInfoFragment(election.id, election.division)
+                )
         })
         binding.upcomingElectionsRv.adapter = electionListAdapter
     }
@@ -76,8 +83,7 @@ class ElectionsFragment: Fragment() {
         viewModel.electionsShowingList.observe(viewLifecycleOwner, Observer { electionListAdapter.submitList(it) })
     }
 
-    //TODO: Refresh adapters when fragment loads
-
+    // Refresh adapters when fragment loads
     private fun updateShowingList() {
         viewModel.refreshListData()
     }

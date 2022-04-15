@@ -7,7 +7,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentVoterInfoBinding
 
 class VoterInfoFragment : Fragment() {
@@ -26,8 +29,10 @@ class VoterInfoFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_voter_info, container, false)
+        application = requireNotNull(this.activity).application
 
-        //TODO: Add ViewModel values and create ViewModel
+        // Add ViewModel values and create ViewModel
+        initViewModelAndLifeCycleOwner()
 
         //TODO: Add binding values
 
@@ -45,6 +50,18 @@ class VoterInfoFragment : Fragment() {
 
         return binding.root
     }
+
+
+//------------------------------------- Intialization ----------------------------------------------
+
+
+    private fun initViewModelAndLifeCycleOwner() {
+        viewModelFactory = VoterInfoViewModelFactory(application, ElectionDatabase.getInstance(application))
+        viewModel = ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+    }
+
 
     //TODO: Create method to load URL intents
 
