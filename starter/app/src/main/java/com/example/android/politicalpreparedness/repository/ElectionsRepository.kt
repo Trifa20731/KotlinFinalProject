@@ -35,16 +35,4 @@ class ElectionsRepository(private val database: ElectionDatabase) {
         }
     }
 
-    suspend fun refreshFollowedElections() {
-        withContext(Dispatchers.IO) {
-            try {
-                Log.d(LOG_TAG, "refreshFollowedElections, try to get the followed election.")
-            } catch (e: Exception) {
-                Log.e(LOG_TAG, "refreshFollowedElections, get error message")
-                Log.e(LOG_TAG, e.message!!)
-            }
-        }
-    }
-
-
 }

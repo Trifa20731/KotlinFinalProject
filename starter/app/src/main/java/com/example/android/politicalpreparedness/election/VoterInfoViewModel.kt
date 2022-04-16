@@ -4,10 +4,12 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.network.models.FollowedElection
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
-import com.example.android.politicalpreparedness.repository.ElectionsRepository
+import kotlinx.coroutines.launch
 
 class VoterInfoViewModel(
     private val application: Application,
@@ -43,12 +45,15 @@ class VoterInfoViewModel(
 
     //TODO: Add var and methods to support loading URLs
 
-    //TODO: Add var and methods to save and remove elections to local database
+    // Add var and methods to save and remove elections to local database
+    fun followElection(electionId: Int) {
+        val followedElection = FollowedElection(electionId)
+        viewModelScope.launch {
+            dataSource.followedElectionDao.insertFollowedElection(followedElection)
+        }
+    }
 
     //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
 
-    /**
-     * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.
-     */
 
 }

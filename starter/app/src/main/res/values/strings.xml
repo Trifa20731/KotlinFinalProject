@@ -25,6 +25,11 @@
 
     <!-- Vote Information Fragment -->
     <string name="default_election_tv_label">Default Election</string>
+    <string name="election_information_tv_label">Election Information</string>
+    <string name="voting_Location_tv_label">Voting Location</string>
+    <string name="ballot_information_tv_label">Ballot Information</string>
+    <string name="follow_election_btn_label">Follow Election</string>
+    <string name="unfollow_election_btn_label">Unfollow Election</string>
 
     <!-- Exception Message -->
     <string name="unknown_view_model_exception">Unknown View Model class when create main VM.</string>

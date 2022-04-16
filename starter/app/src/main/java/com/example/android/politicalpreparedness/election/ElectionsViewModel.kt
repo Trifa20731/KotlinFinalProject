@@ -29,9 +29,13 @@ class ElectionsViewModel(
     val navigateToDetail: LiveData<Election?>
         get() = _navigateToDetail
 
-    private val _electionShowingList = MutableLiveData<List<Election>>()
-    val electionsShowingList: LiveData<List<Election>>
-        get() = _electionShowingList
+    private val _upcomingElectionShowingList = MutableLiveData<List<Election>>()
+    val upcomingElectionsShowingList: LiveData<List<Election>>
+        get() = _upcomingElectionShowingList
+
+    private val _followedElectionShowingList = MutableLiveData<List<Election>>()
+    val followedElectionShowingList: LiveData<List<Election>>
+        get() = _followedElectionShowingList
 
     private val _stateInfoShowing = MutableLiveData<String>()
     val stateInfoShowing: LiveData<String>
@@ -47,7 +51,7 @@ class ElectionsViewModel(
     init {
         getAppDataProperty()
     }
-    val electionsResponseList = electionsRepo.elections
+    val upcomingElectionsResponseList = electionsRepo.elections
 
 
 
@@ -77,7 +81,7 @@ class ElectionsViewModel(
      * */
     fun refreshListData() {
         _stateInfoShowing.value = "Refreshing List Data......"
-        _electionShowingList.value = electionsResponseList.value
+        _upcomingElectionShowingList.value = upcomingElectionsResponseList.value
     }
 
 

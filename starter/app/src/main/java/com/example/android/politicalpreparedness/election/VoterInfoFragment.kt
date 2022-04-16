@@ -36,7 +36,8 @@ class VoterInfoFragment : Fragment() {
         val args: VoterInfoFragmentArgs = VoterInfoFragmentArgs.fromBundle(requireArguments())
         // Add ViewModel values and create ViewModel.
         initViewModelAndLifeCycleOwner(args.argElectionId, args.argDivision)
-        // TODO: Add binding values
+        // Initialize the click listener
+        initClickListener(args.argElectionId)
 
         //TODO: Populate voter info -- hide views without provided data.
         /**
@@ -65,7 +66,9 @@ class VoterInfoFragment : Fragment() {
         viewModel.getElectionInfo(electionId)
     }
 
-
+    private fun initClickListener(electionId: Int) {
+        binding.followToggleBtn.setOnClickListener { viewModel.followElection(electionId) }
+    }
 
     //TODO: Create method to load URL intents
 
