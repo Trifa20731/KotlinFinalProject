@@ -50,16 +50,17 @@ class ElectionsViewModel(
      * Init Block: To get data from Internet.
      * */
     init {
-        getAppDataProperty()
+        getElectionList()
     }
     val upcomingElectionsResponseList = electionsRepo.elections
+    val followedElectionResponseList = electionsRepo.followedElections
 
 
 //------------------------------------- Data Retrieve Functions ------------------------------------
 
 
-    private fun getAppDataProperty() {
-        Log.d(LOG_TAG, "getAppDataProperty: run.")
+    private fun getElectionList() {
+        Log.d(LOG_TAG, "getElectionList: run.")
         if (isNetworkAvailable(application)) {
             viewModelScope.launch {
                 try {
@@ -79,9 +80,20 @@ class ElectionsViewModel(
     /**
      * The function to refresh the data will be shown in the UI list.
      * */
-    fun refreshListData() {
-        _stateInfoShowing.value = "Refreshing List Data......"
+    fun refreshElectionListData() {
+        Log.d(LOG_TAG, "refreshElectionListData, run.")
         _upcomingElectionShowingList.value = upcomingElectionsResponseList.value
+    }
+
+    fun refreshFollowedElectionData() {
+        Log.d(LOG_TAG, "refreshFollowedElectionData, run.")
+        val testList = followedElectionResponseList.value
+        testList?.forEach {
+            val election = dataSource.electionDao.selectElectionBySingleId(it.id)
+            Log.d(ElectionsFragment.LOG_TAG, "The followed id is ${it.id}")
+            Log.d(LOG_TAG, "Followed Election Name is ${election.value?.name}")
+        }
+        _followedElectionShowingList.value = testList
     }
 
 

@@ -13,12 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
-import com.example.android.politicalpreparedness.database.FollowedElectionDao
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionClickListener
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
 import com.example.android.politicalpreparedness.network.models.FollowedElection
 import com.example.android.politicalpreparedness.utils.SupportFunctions
+import kotlinx.android.synthetic.main.fragment_election.*
 
 class ElectionsFragment: Fragment() {
 
@@ -31,6 +31,7 @@ class ElectionsFragment: Fragment() {
     private lateinit var viewModel: ElectionsViewModel
     private lateinit var viewModelFactory: ElectionsViewModelFactory
     private lateinit var electionListAdapter: ElectionListAdapter
+    private lateinit var followedElectionListAdapter: ElectionListAdapter
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -68,38 +69,18 @@ class ElectionsFragment: Fragment() {
     }
 
     private fun initAdapter() {
-        electionListAdapter = ElectionListAdapter(ElectionClickListener { election ->
-            view!!
-                .findNavController()
-                .navigate(
-                    ElectionsFragmentDirections
-                        .actionElectionsFragmentToVoterInfoFragment(election.id, election.division)
-                )
-        })
+        electionListAdapter = ElectionListAdapter(ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division)) })
+        followedElectionListAdapter = ElectionListAdapter(ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id,election.division)) })
         binding.upcomingElectionsRv.adapter = electionListAdapter
+        binding.savedElectionsRv.adapter = followedElectionListAdapter
     }
 
     private fun initObserver() {
         viewModel.stateInfoShowing.observe(viewLifecycleOwner, Observer { SupportFunctions.showShortToast(application, it) })
-        viewModel.upcomingElectionsResponseList.observe(viewLifecycleOwner, Observer { updateShowingList() })
+        viewModel.upcomingElectionsResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshElectionListData() })
+        viewModel.followedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshFollowedElectionData() })
         viewModel.upcomingElectionsShowingList.observe(viewLifecycleOwner, Observer { electionListAdapter.submitList(it) })
-        viewModel.followedElectionShowingList.observe(viewLifecycleOwner, Observer { showFollowedList(it) })
+        viewModel.followedElectionShowingList.observe(viewLifecycleOwner, Observer { it.forEach{ Log.d(LOG_TAG, "The followed id is ${it.id}") } })
     }
-
-
-//------------------------------------- Observer Update Functions ---------------------------------
-
-
-    // Refresh adapters when fragment loads
-    private fun updateShowingList() {
-        viewModel.refreshListData()
-    }
-
-    private fun showFollowedList(followedElectionsList: List<FollowedElection>) {
-        for (followedElection in followedElectionsList) {
-            Log.d(LOG_TAG, "followedElectionId: ${followedElection.id}")
-        }
-    }
-
 
 }

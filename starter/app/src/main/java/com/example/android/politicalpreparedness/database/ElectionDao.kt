@@ -41,7 +41,10 @@ interface ElectionDao {
      * @return the election with electionId.
      * */
     @Query("SELECT * FROM election_table WHERE id = :electionId")
-    fun selectElection(electionId: Int): LiveData<Election>
+    fun selectElectionBySingleId(electionId: Int): LiveData<Election>
+
+    @Query("SELECT * FROM election_table WHERE id IN (:electionIdList)")
+    fun selectElectionByMultipleId(electionIdList: List<Int>): LiveData<List<Election>>
 
     /**
      * Delete all elections.
