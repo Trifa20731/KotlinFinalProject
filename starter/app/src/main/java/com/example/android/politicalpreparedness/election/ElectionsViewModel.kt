@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.models.Election
+import com.example.android.politicalpreparedness.network.models.FollowedElection
 import com.example.android.politicalpreparedness.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.utils.isNetworkAvailable
 import kotlinx.coroutines.launch
@@ -33,8 +34,8 @@ class ElectionsViewModel(
     val upcomingElectionsShowingList: LiveData<List<Election>>
         get() = _upcomingElectionShowingList
 
-    private val _followedElectionShowingList = MutableLiveData<List<Election>>()
-    val followedElectionShowingList: LiveData<List<Election>>
+    private val _followedElectionShowingList = MutableLiveData<List<FollowedElection>>()
+    val followedElectionShowingList: LiveData<List<FollowedElection>>
         get() = _followedElectionShowingList
 
     private val _stateInfoShowing = MutableLiveData<String>()
@@ -52,7 +53,6 @@ class ElectionsViewModel(
         getAppDataProperty()
     }
     val upcomingElectionsResponseList = electionsRepo.elections
-
 
 
 //------------------------------------- Data Retrieve Functions ------------------------------------

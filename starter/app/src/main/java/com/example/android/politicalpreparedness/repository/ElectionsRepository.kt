@@ -35,4 +35,16 @@ class ElectionsRepository(private val database: ElectionDatabase) {
         }
     }
 
+    suspend fun insertFollowedElection(electionId: Int) {
+        withContext(Dispatchers.IO) {
+            try {
+                Log.d(LOG_TAG, "insertFollowedElection, try to insert followed election.")
+                val followedElection = FollowedElection(electionId)
+                database.followedElectionDao.insertFollowedElection(followedElection)
+            } catch (e: Exception) {
+                Log.e(LOG_TAG, "insertFollowedElection, get error message")
+                Log.e(LOG_TAG, e.message!!)
+            }
+        }
+    }
 }

@@ -2,6 +2,7 @@ package com.example.android.politicalpreparedness.election
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +13,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
+import com.example.android.politicalpreparedness.database.FollowedElectionDao
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionClickListener
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
+import com.example.android.politicalpreparedness.network.models.FollowedElection
 import com.example.android.politicalpreparedness.utils.SupportFunctions
 
 class ElectionsFragment: Fragment() {
@@ -80,11 +83,22 @@ class ElectionsFragment: Fragment() {
         viewModel.stateInfoShowing.observe(viewLifecycleOwner, Observer { SupportFunctions.showShortToast(application, it) })
         viewModel.upcomingElectionsResponseList.observe(viewLifecycleOwner, Observer { updateShowingList() })
         viewModel.upcomingElectionsShowingList.observe(viewLifecycleOwner, Observer { electionListAdapter.submitList(it) })
+        viewModel.followedElectionShowingList.observe(viewLifecycleOwner, Observer { showFollowedList(it) })
     }
+
+
+//------------------------------------- Observer Update Functions ---------------------------------
+
 
     // Refresh adapters when fragment loads
     private fun updateShowingList() {
         viewModel.refreshListData()
+    }
+
+    private fun showFollowedList(followedElectionsList: List<FollowedElection>) {
+        for (followedElection in followedElectionsList) {
+            Log.d(LOG_TAG, "followedElectionId: ${followedElection.id}")
+        }
     }
 
 

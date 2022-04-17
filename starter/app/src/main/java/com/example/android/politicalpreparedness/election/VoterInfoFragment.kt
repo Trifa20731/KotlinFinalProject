@@ -4,10 +4,7 @@ import android.app.Application
 import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
@@ -67,7 +64,7 @@ class VoterInfoFragment : Fragment() {
     }
 
     private fun initClickListener(electionId: Int) {
-        binding.followToggleBtn.setOnClickListener { viewModel.followElection(electionId) }
+        binding.followToggleBtn.setOnClickListener { viewModel.insertFollowElection(electionId) }
     }
 
     //TODO: Create method to load URL intents
