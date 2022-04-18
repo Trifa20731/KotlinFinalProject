@@ -78,9 +78,11 @@ class ElectionsFragment: Fragment() {
     private fun initObserver() {
         viewModel.stateInfoShowing.observe(viewLifecycleOwner, Observer { SupportFunctions.showShortToast(application, it) })
         viewModel.upcomingElectionsResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshElectionListData() })
-        viewModel.followedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshFollowedElectionData() })
+        viewModel.followedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshFollowedElectionsData() })
         viewModel.upcomingElectionsShowingList.observe(viewLifecycleOwner, Observer { electionListAdapter.submitList(it) })
-        viewModel.followedElectionShowingList.observe(viewLifecycleOwner, Observer { it.forEach{ Log.d(LOG_TAG, "The followed id is ${it.id}") } })
+        viewModel.followedElectionShowingList.observe(viewLifecycleOwner, Observer {
+            it.forEach{ Log.d(LOG_TAG, "The followed election id is ${it.id}") }
+        })
     }
 
 }

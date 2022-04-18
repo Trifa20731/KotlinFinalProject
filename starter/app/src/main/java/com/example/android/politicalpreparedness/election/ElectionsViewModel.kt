@@ -24,6 +24,7 @@ class ElectionsViewModel(
     }
 
     private val electionsRepo: ElectionsRepository = ElectionsRepository(dataSource)
+    private val savedElectionIdList: MutableList<Int> = mutableListOf()
 
     // The navigation action to detail page.
     private val _navigateToDetail = MutableLiveData<Election?>()
@@ -37,6 +38,8 @@ class ElectionsViewModel(
     private val _followedElectionShowingList = MutableLiveData<List<FollowedElection>>()
     val followedElectionShowingList: LiveData<List<FollowedElection>>
         get() = _followedElectionShowingList
+
+
 
     private val _stateInfoShowing = MutableLiveData<String>()
     val stateInfoShowing: LiveData<String>
@@ -85,15 +88,9 @@ class ElectionsViewModel(
         _upcomingElectionShowingList.value = upcomingElectionsResponseList.value
     }
 
-    fun refreshFollowedElectionData() {
-        Log.d(LOG_TAG, "refreshFollowedElectionData, run.")
-        val testList = followedElectionResponseList.value
-        testList?.forEach {
-            val election = dataSource.electionDao.selectElectionBySingleId(it.id)
-            Log.d(ElectionsFragment.LOG_TAG, "The followed id is ${it.id}")
-            Log.d(LOG_TAG, "Followed Election Name is ${election.value?.name}")
-        }
-        _followedElectionShowingList.value = testList
+    fun refreshFollowedElectionsData() {
+        Log.d(LOG_TAG, "refreshFollowedElectionsData, run.")
+        _followedElectionShowingList.value = followedElectionResponseList.value
     }
 
 
