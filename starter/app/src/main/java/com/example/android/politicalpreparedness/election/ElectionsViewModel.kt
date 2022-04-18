@@ -35,8 +35,8 @@ class ElectionsViewModel(
     val upcomingElectionsShowingList: LiveData<List<Election>>
         get() = _upcomingElectionShowingList
 
-    private val _followedElectionShowingList = MutableLiveData<List<FollowedElection>>()
-    val followedElectionShowingList: LiveData<List<FollowedElection>>
+    private val _followedElectionShowingList = MutableLiveData<List<Election>>()
+    val followedElectionShowingList: LiveData<List<Election>>
         get() = _followedElectionShowingList
 
 

@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.databinding.ListHeaderElectionsBinding
 
 class ElectionHeaderViewHolder private constructor(val binding: ListHeaderElectionsBinding): RecyclerView.ViewHolder(binding.root){
-    fun bind() {
+
+    fun bind(electionHeader: String) {
+        binding.electionHeader = electionHeader
         binding.executePendingBindings()
     }
 

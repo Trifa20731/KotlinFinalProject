@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.politicalpreparedness.network.models.Election
 
-class ElectionListAdapter(val clickListener: ElectionClickListener):
+class ElectionListAdapter(val electionHeader: String, val clickListener: ElectionClickListener):
     ListAdapter<Election, RecyclerView.ViewHolder>(ElectionDiffCallback()) {
 
     companion object {
@@ -24,7 +24,7 @@ class ElectionListAdapter(val clickListener: ElectionClickListener):
     // Bind View Holder.
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ElectionHeaderViewHolder) {
-            holder.bind()
+            holder.bind(electionHeader)
         } else if ( holder is ElectionItemViewHolder ) {
             holder.bind(clickListener, getItem(position))
         }

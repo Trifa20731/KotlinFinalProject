@@ -16,9 +16,7 @@ import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentElectionBinding
 import com.example.android.politicalpreparedness.election.adapter.ElectionClickListener
 import com.example.android.politicalpreparedness.election.adapter.ElectionListAdapter
-import com.example.android.politicalpreparedness.network.models.FollowedElection
 import com.example.android.politicalpreparedness.utils.SupportFunctions
-import kotlinx.android.synthetic.main.fragment_election.*
 
 class ElectionsFragment: Fragment() {
 
@@ -69,8 +67,12 @@ class ElectionsFragment: Fragment() {
     }
 
     private fun initAdapter() {
-        electionListAdapter = ElectionListAdapter(ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division)) })
-        followedElectionListAdapter = ElectionListAdapter(ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id,election.division)) })
+        electionListAdapter = ElectionListAdapter(
+            getString(R.string.upcoming_elections_tv_label),
+            ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division)) })
+        followedElectionListAdapter = ElectionListAdapter(
+            getString(R.string.saved_elections_tv_label),
+            ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id,election.division)) })
         binding.upcomingElectionsRv.adapter = electionListAdapter
         binding.savedElectionsRv.adapter = followedElectionListAdapter
     }
@@ -80,9 +82,7 @@ class ElectionsFragment: Fragment() {
         viewModel.upcomingElectionsResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshElectionListData() })
         viewModel.followedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshFollowedElectionsData() })
         viewModel.upcomingElectionsShowingList.observe(viewLifecycleOwner, Observer { electionListAdapter.submitList(it) })
-        viewModel.followedElectionShowingList.observe(viewLifecycleOwner, Observer {
-            it.forEach{ Log.d(LOG_TAG, "The followed election id is ${it.id}") }
-        })
+        viewModel.followedElectionShowingList.observe(viewLifecycleOwner, Observer { followedElectionListAdapter.submitList(it) })
     }
 
 }
