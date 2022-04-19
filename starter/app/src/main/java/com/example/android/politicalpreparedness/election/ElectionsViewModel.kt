@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.network.models.FollowedElection
 import com.example.android.politicalpreparedness.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.utils.isNetworkAvailable
 import kotlinx.coroutines.launch
@@ -96,7 +95,7 @@ class ElectionsViewModel(
 
 //------------------------------------- Event Trigger Function -------------------------------------
 
-
+    
     /**
      * Function will be called when list item has been clicked.
      * */

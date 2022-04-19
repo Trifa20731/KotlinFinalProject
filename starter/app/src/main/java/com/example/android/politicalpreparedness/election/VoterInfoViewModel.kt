@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.network.models.FollowedElection
+import com.example.android.politicalpreparedness.network.models.ElectionId
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import com.example.android.politicalpreparedness.repository.ElectionsRepository
 import kotlinx.coroutines.launch
@@ -47,18 +47,19 @@ class VoterInfoViewModel(
     //TODO: Add var and methods to support loading URLs
 
     // Add var and methods to save and remove elections to local database
-    fun insertFollowElection(electionId: Int) {
-        val followedElection = FollowedElection(electionId)
+    fun insertElectionId(electionId: Int) {
+        val toBeInsertedElectionId = ElectionId(electionId)
         viewModelScope.launch {
             try {
-                Log.d(LOG_TAG, "Insert the followed election the id is ${followedElection.id}")
-                electionsRepo.insertFollowedElection(electionId)
+                Log.d(LOG_TAG, "Insert the electionId the id is ${toBeInsertedElectionId.id}")
+                electionsRepo.insertElectionId(electionId)
             } catch (e: Exception) {
-                Log.e(LOG_TAG, "Get error message in insert followed election.")
+                Log.e(LOG_TAG, "Get error message in insert electionId.")
                 Log.e(LOG_TAG, e.message!!)
             }
         }
     }
+
 
     //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
 

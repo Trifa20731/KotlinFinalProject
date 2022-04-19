@@ -1,13 +1,11 @@
 package com.example.android.politicalpreparedness.repository
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.room.Room
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.network.models.FollowedElection
+import com.example.android.politicalpreparedness.network.models.ElectionId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -22,7 +20,7 @@ class ElectionsRepository(private val database: ElectionDatabase) {
     }
 
     val elections: LiveData<List<Election>> = database.electionDao.selectElections()
-    val followedElections: LiveData<List<Election>> = database.followedElectionDao.selectFollowedElections()
+    val followedElections: LiveData<List<Election>> = database.electionIdDao.selectElectionIds()
 
     suspend fun refreshElections() {
         withContext(Dispatchers.IO) {
@@ -37,14 +35,14 @@ class ElectionsRepository(private val database: ElectionDatabase) {
         }
     }
 
-    suspend fun insertFollowedElection(electionId: Int) {
+    suspend fun insertElectionId(electionId: Int) {
         withContext(Dispatchers.IO) {
             try {
-                Log.d(LOG_TAG, "insertFollowedElection, try to insert followed election.")
-                val followedElection = FollowedElection(electionId)
-                database.followedElectionDao.insertFollowedElection(followedElection)
+                Log.d(LOG_TAG, "insertElectionId, try to insert followed election.")
+                val toBeInsertedElectionId = ElectionId(electionId)
+                database.electionIdDao.insertElectionId(toBeInsertedElectionId)
             } catch (e: Exception) {
-                Log.e(LOG_TAG, "insertFollowedElection, get error message")
+                Log.e(LOG_TAG, "insertElectionId, get error message")
                 Log.e(LOG_TAG, e.message!!)
             }
         }

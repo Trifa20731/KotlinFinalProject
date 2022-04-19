@@ -6,14 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.network.models.FollowedElection
+import com.example.android.politicalpreparedness.network.models.ElectionId
 
-@Database(entities = [Election::class, FollowedElection::class], version = 7, exportSchema = false)
+@Database(entities = [Election::class, ElectionId::class], version = 8, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class ElectionDatabase: RoomDatabase() {
 
     abstract val electionDao: ElectionDao
-    abstract val followedElectionDao: FollowedElectionDao
+    abstract val electionIdDao: ElectionIdDao
 
     companion object {
 

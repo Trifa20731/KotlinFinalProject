@@ -64,7 +64,7 @@ class VoterInfoFragment : Fragment() {
     }
 
     private fun initClickListener(electionId: Int) {
-        binding.followToggleBtn.setOnClickListener { viewModel.insertFollowElection(electionId) }
+        binding.followToggleBtn.setOnClickListener { viewModel.insertElectionId(electionId) }
     }
 
     //TODO: Create method to load URL intents
