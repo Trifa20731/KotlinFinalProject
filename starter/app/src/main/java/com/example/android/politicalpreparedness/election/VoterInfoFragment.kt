@@ -52,7 +52,7 @@ class VoterInfoFragment : Fragment() {
     }
 
 
-//------------------------------------- Intialization ----------------------------------------------
+//------------------------------------- Initialization ----------------------------------------------
 
 
     private fun initViewModelAndLifeCycleOwner(electionId: Int, division: Division) {

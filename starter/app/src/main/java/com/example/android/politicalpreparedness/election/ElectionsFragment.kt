@@ -2,6 +2,7 @@ package com.example.android.politicalpreparedness.election
 
 import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +72,7 @@ class ElectionsFragment: Fragment() {
             ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division)) })
         followedElectionListAdapter = ElectionListAdapter(
             getString(R.string.saved_elections_tv_label),
-            ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id,election.division)) })
+            ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division)) })
         binding.upcomingElectionsRv.adapter = electionListAdapter
         binding.savedElectionsRv.adapter = followedElectionListAdapter
     }
@@ -79,9 +80,9 @@ class ElectionsFragment: Fragment() {
     private fun initObserver() {
         viewModel.stateInfoShowing.observe(viewLifecycleOwner, Observer { SupportFunctions.showShortToast(application, it) })
         viewModel.upcomingElectionsResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshElectionListData() })
-        viewModel.followedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshFollowedElectionsData() })
-        viewModel.upcomingElectionsShowingList.observe(viewLifecycleOwner, Observer { electionListAdapter.submitList(it) })
-        viewModel.followedElectionShowingList.observe(viewLifecycleOwner, Observer { followedElectionListAdapter.submitList(it) })
+        viewModel.followedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshSavedElectionListData() })
+        viewModel.upcomingElectionsShowingList.observe(viewLifecycleOwner, Observer { electionListAdapter.addHeaderAndSubmitList(it) })
+        viewModel.followedElectionShowingList.observe(viewLifecycleOwner, Observer { followedElectionListAdapter.addHeaderAndSubmitList(it) })
     }
 
 }

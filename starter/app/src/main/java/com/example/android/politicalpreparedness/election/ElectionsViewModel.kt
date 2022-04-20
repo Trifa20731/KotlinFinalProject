@@ -55,7 +55,7 @@ class ElectionsViewModel(
         getElectionList()
     }
     val upcomingElectionsResponseList = electionsRepo.elections
-    val followedElectionResponseList = electionsRepo.followedElections
+    val followedElectionResponseList = electionsRepo.electionIds
 
 
 //------------------------------------- Data Retrieve Functions ------------------------------------
@@ -87,7 +87,7 @@ class ElectionsViewModel(
         _upcomingElectionShowingList.value = upcomingElectionsResponseList.value
     }
 
-    fun refreshFollowedElectionsData() {
+    fun refreshSavedElectionListData() {
         Log.d(LOG_TAG, "refreshFollowedElectionsData, run.")
         _followedElectionShowingList.value = followedElectionResponseList.value
     }

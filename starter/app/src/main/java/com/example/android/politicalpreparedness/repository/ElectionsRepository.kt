@@ -20,7 +20,7 @@ class ElectionsRepository(private val database: ElectionDatabase) {
     }
 
     val elections: LiveData<List<Election>> = database.electionDao.selectElections()
-    val followedElections: LiveData<List<Election>> = database.electionIdDao.selectElectionIds()
+    val electionIds: LiveData<List<Election>> = database.electionIdDao.selectElectionIds()
 
     suspend fun refreshElections() {
         withContext(Dispatchers.IO) {
@@ -38,7 +38,7 @@ class ElectionsRepository(private val database: ElectionDatabase) {
     suspend fun insertElectionId(electionId: Int) {
         withContext(Dispatchers.IO) {
             try {
-                Log.d(LOG_TAG, "insertElectionId, try to insert followed election.")
+                Log.d(LOG_TAG, "insertElectionId, try to insert election id.")
                 val toBeInsertedElectionId = ElectionId(electionId)
                 database.electionIdDao.insertElectionId(toBeInsertedElectionId)
             } catch (e: Exception) {
