@@ -21,6 +21,8 @@ class ElectionsFragment: Fragment() {
 
     companion object {
         const val LOG_TAG: String = "ElectionsFragment"
+        const val ELECTION_STATE_UPCOMING: Int = 0
+        const val ELECTION_STATE_SAVED: Int = 1
     }
 
     private lateinit var binding: FragmentElectionBinding
@@ -28,7 +30,7 @@ class ElectionsFragment: Fragment() {
     private lateinit var viewModel: ElectionsViewModel
     private lateinit var viewModelFactory: ElectionsViewModelFactory
     private lateinit var electionListAdapter: ElectionListAdapter
-    private lateinit var followedElectionListAdapter: ElectionListAdapter
+    private lateinit var savedElectionListAdapter: ElectionListAdapter
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -39,18 +41,10 @@ class ElectionsFragment: Fragment() {
 
         // Add ViewModel values and create ViewModel
         initViewModelAndLifeCycleOwner()
-
-        //TODO: Add binding values
-
-        //TODO: Link elections to voter info
-
         // Initiate recycler adapters
         initAdapter()
         // Initiate observer function
         initObserver()
-
-        //TODO: Populate recycler adapters
-
         return binding.root
     }
 
@@ -68,12 +62,12 @@ class ElectionsFragment: Fragment() {
     private fun initAdapter() {
         electionListAdapter = ElectionListAdapter(
             getString(R.string.upcoming_elections_tv_label),
-            ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division)) })
-        followedElectionListAdapter = ElectionListAdapter(
+            ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division, ELECTION_STATE_UPCOMING)) })
+        savedElectionListAdapter = ElectionListAdapter(
             getString(R.string.saved_elections_tv_label),
-            ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division)) })
+            ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division, ELECTION_STATE_SAVED)) })
         binding.upcomingElectionsRv.adapter = electionListAdapter
-        binding.savedElectionsRv.adapter = followedElectionListAdapter
+        binding.savedElectionsRv.adapter = savedElectionListAdapter
     }
 
     private fun initObserver() {
@@ -82,7 +76,7 @@ class ElectionsFragment: Fragment() {
         viewModel.unsavedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshUpcomingElectionListData() })
         viewModel.savedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshSavedElectionListData() })
         viewModel.upcomingElectionsShowingList.observe(viewLifecycleOwner, Observer { electionListAdapter.addHeaderAndSubmitList(it) })
-        viewModel.savedElectionShowingList.observe(viewLifecycleOwner, Observer { followedElectionListAdapter.addHeaderAndSubmitList(it) })
+        viewModel.savedElectionShowingList.observe(viewLifecycleOwner, Observer { savedElectionListAdapter.addHeaderAndSubmitList(it) })
     }
 
 }

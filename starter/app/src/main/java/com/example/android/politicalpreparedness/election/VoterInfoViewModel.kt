@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDatabase
+import com.example.android.politicalpreparedness.network.models.Division
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.ElectionId
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
@@ -28,10 +29,11 @@ class VoterInfoViewModel(
 
     companion object {
         const val LOG_TAG: String = "VoterInfoViewModel"
+        const val ELECTION_STATE_UNSAVED: Int = 0
+        const val ELECTION_STATE_SAVED: Int = 1
     }
 
     lateinit var election: LiveData<Election>
-    private var electionState: Int = 0
     private val electionsRepo: ElectionsRepository = ElectionsRepository(dataSource)
 
     // Add live data to hold voter info
@@ -40,11 +42,18 @@ class VoterInfoViewModel(
         get() = _voterInfoResponse
 
 
+    private val _electionState = MutableLiveData<Int>()
+    val electionState: LiveData<Int>
+        get() = _electionState
+
+
 //--------------------------------------------------------------------------------------------------
 
 
-    fun getElectionInfo(electionId: Int, state: Int) {
+    fun getElectionInfo(electionId: Int, division: Division, state: Int) {
         election = dataSource.electionDao.selectElectionBySingleId(electionId)
+        Log.d(LOG_TAG, "The division is ${division.country}, ${division.state}")
+        _electionState.value = state
     }
 
 
@@ -56,7 +65,21 @@ class VoterInfoViewModel(
     //TODO: Add var and methods to support loading URLs
 
     // Add var and methods to save and remove elections to local database
-    fun insertSaveElection(electionId: Int) {
+    fun insertOrDeleteSaveElection(electionId: Int) {
+        when (_electionState.value) {
+            ELECTION_STATE_UNSAVED -> {
+                insertSavedElection(electionId)
+                _electionState.value = ELECTION_STATE_SAVED
+            }
+            ELECTION_STATE_SAVED -> {
+                deleteSavedElection(electionId)
+                _electionState.value = ELECTION_STATE_UNSAVED
+            }
+        }
+    }
+
+
+    private fun insertSavedElection(electionId:Int) {
         val toBeInsertedElectionId = ElectionId(electionId)
         viewModelScope.launch {
             try {
@@ -69,20 +92,16 @@ class VoterInfoViewModel(
         }
     }
 
-    fun deleteSavedElection(electionId: Int) {
+    private fun deleteSavedElection(electionId: Int) {
         viewModelScope.launch {
             try {
-                Log.d(LOG_TAG, "delete the saved election, the id is $electionId")
+                Log.d(LOG_TAG, "Delete the electionId the id is ${electionId}")
                 electionsRepo.deleteSavedElection(electionId)
-            } catch (e: java.lang.Exception) {
-                Log.e(LOG_TAG, "Get error message in delete saved election.")
+            } catch (e: Exception) {
+                Log.e(LOG_TAG, "Get error message in delete electionId.")
                 Log.e(LOG_TAG, e.message!!)
             }
         }
     }
-
-
-    //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
-
 
 }

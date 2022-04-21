@@ -45,8 +45,7 @@ interface CivicsApiService {
     @GET(Constants.VOTER_INFO_QUERY_PATH)
     suspend fun getVoterInfoListAsync(
         @Query("address") address: String,
-        @Query("electionId") electionId: Long,
-        @Query("officialOnly") officialOnly: Boolean
+        @Query("electionId") electionId: Long
     ): VoterInfoResponse
 
     // Add representatives API Call

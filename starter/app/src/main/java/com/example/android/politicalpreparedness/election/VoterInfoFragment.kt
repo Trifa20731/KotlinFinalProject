@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
@@ -35,18 +36,16 @@ class VoterInfoFragment : Fragment() {
         initViewModelAndLifeCycleOwner(args.argElectionId, args.argDivision, args.argElectionState)
         // Initialize the click listener
         initClickListener(args.argElectionId)
+        // Initialize the observer function
+        initObserver()
 
         //TODO: Populate voter info -- hide views without provided data.
         /**
         Hint: You will need to ensure proper data is provided from previous fragment.
         */
 
-
         //TODO: Handle loading of URLs
 
-        //TODO: Handle save button UI state
-
-        //TODO: cont'd Handle save button clicks
 
         return binding.root
     }
@@ -60,13 +59,30 @@ class VoterInfoFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.getElectionInfo(electionId, state)
+        viewModel.getElectionInfo(electionId, division, state)
     }
 
     private fun initClickListener(electionId: Int) {
-        binding.followToggleBtn.setOnClickListener { viewModel.insertSaveElection(electionId) }
+        binding.followToggleBtn.setOnClickListener { viewModel.insertOrDeleteSaveElection(electionId) }
+    }
+
+    private fun initObserver() {
+        viewModel.electionState.observe(viewLifecycleOwner, Observer { updateElectionSaveButton(it) })
     }
 
     //TODO: Create method to load URL intents
+
+
+//------------------------------------- Observer Functions -----------------------------------------
+
+
+    private fun updateElectionSaveButton(state: Int) {
+        when (state) {
+            0 -> { binding.followToggleBtn.text = getString(R.string.follow_election_btn_label) }
+            1 -> { binding.followToggleBtn.text = getString(R.string.unfollow_election_btn_label) }
+        }
+
+    }
+
 
 }

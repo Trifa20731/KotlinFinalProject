@@ -96,25 +96,4 @@ class ElectionsViewModel(
     }
 
 
-//------------------------------------- Event Trigger Function -------------------------------------
-
-    
-    /**
-     * Function will be called when list item has been clicked.
-     * */
-    fun onElectionClicked(election: Election) {
-        _navigateToDetail.value = election
-    }
-
-    /**
-     * Reset the parameter after navigation.
-     * */
-    fun doneNavigation() {
-        _navigateToDetail.value = null
-    }
-
-    //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
-
-    //TODO: Create functions to navigate to saved or upcoming election voter info
-
 }

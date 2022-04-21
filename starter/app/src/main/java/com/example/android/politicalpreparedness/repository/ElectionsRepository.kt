@@ -23,6 +23,10 @@ class ElectionsRepository(private val database: ElectionDatabase) {
     val savedElections: LiveData<List<Election>> = database.electionIdDao.selectSavedElections()
     val unsavedElections: LiveData<List<Election>> = database.electionIdDao.selectUnsavedElections()
 
+
+//------------------------------------- Election ---------------------------------------------------
+
+
     suspend fun refreshElections() {
         withContext(Dispatchers.IO) {
             try {
@@ -60,4 +64,21 @@ class ElectionsRepository(private val database: ElectionDatabase) {
             }
         }
     }
+
+
+//------------------------------------- VoterInfo --------------------------------------------------
+
+
+    suspend fun refreshVoterInfo(address: String, electionId: Long) {
+        withContext(Dispatchers.IO) {
+            try {
+                Log.d(LOG_TAG, "refreshVoterInfo, try to get the voter info from Internet.")
+                val tmpResponse = CivicsApi.retrofitService.getVoterInfoListAsync(address, electionId)
+            } catch (e: Exception) {
+                Log.e(LOG_TAG, "refreshVoterInfo, get error message.")
+                Log.e(LOG_TAG, e.message!!)
+            }
+        }
+    }
+
 }
