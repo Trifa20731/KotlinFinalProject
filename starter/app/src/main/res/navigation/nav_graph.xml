@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_voterInfoFragment_to_electionsFragment"
             app:destination="@id/electionsFragment" />
+        <argument
+            android:name="arg_election_state"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/electionsFragment"

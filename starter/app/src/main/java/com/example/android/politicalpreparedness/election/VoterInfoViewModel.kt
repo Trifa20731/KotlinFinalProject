@@ -13,6 +13,14 @@ import com.example.android.politicalpreparedness.network.models.VoterInfoRespons
 import com.example.android.politicalpreparedness.repository.ElectionsRepository
 import kotlinx.coroutines.launch
 
+/**
+ *
+ *
+ * Note:
+ *     -- Election State:
+ *         -- 0: Unsaved Election.
+ *         -- 1: Saved Election.
+ * */
 class VoterInfoViewModel(
     private val application: Application,
     private val dataSource: ElectionDatabase
@@ -23,6 +31,7 @@ class VoterInfoViewModel(
     }
 
     lateinit var election: LiveData<Election>
+    private var electionState: Int = 0
     private val electionsRepo: ElectionsRepository = ElectionsRepository(dataSource)
 
     // Add live data to hold voter info
@@ -34,7 +43,7 @@ class VoterInfoViewModel(
 //--------------------------------------------------------------------------------------------------
 
 
-    fun getElectionInfo(electionId: Int) {
+    fun getElectionInfo(electionId: Int, state: Int) {
         election = dataSource.electionDao.selectElectionBySingleId(electionId)
     }
 
@@ -47,14 +56,26 @@ class VoterInfoViewModel(
     //TODO: Add var and methods to support loading URLs
 
     // Add var and methods to save and remove elections to local database
-    fun insertElectionId(electionId: Int) {
+    fun insertSaveElection(electionId: Int) {
         val toBeInsertedElectionId = ElectionId(electionId)
         viewModelScope.launch {
             try {
                 Log.d(LOG_TAG, "Insert the electionId the id is ${toBeInsertedElectionId.id}")
-                electionsRepo.insertElectionId(electionId)
+                electionsRepo.insertSavedElection(electionId)
             } catch (e: Exception) {
                 Log.e(LOG_TAG, "Get error message in insert electionId.")
+                Log.e(LOG_TAG, e.message!!)
+            }
+        }
+    }
+
+    fun deleteSavedElection(electionId: Int) {
+        viewModelScope.launch {
+            try {
+                Log.d(LOG_TAG, "delete the saved election, the id is $electionId")
+                electionsRepo.deleteSavedElection(electionId)
+            } catch (e: java.lang.Exception) {
+                Log.e(LOG_TAG, "Get error message in delete saved election.")
                 Log.e(LOG_TAG, e.message!!)
             }
         }

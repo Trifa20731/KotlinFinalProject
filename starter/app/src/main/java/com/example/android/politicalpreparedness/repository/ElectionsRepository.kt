@@ -36,14 +36,26 @@ class ElectionsRepository(private val database: ElectionDatabase) {
         }
     }
 
-    suspend fun insertElectionId(electionId: Int) {
+    suspend fun insertSavedElection(electionId: Int) {
         withContext(Dispatchers.IO) {
             try {
-                Log.d(LOG_TAG, "insertElectionId, try to insert election id.")
+                Log.d(LOG_TAG, "insertSavedElection, try to insert election id.")
                 val toBeInsertedElectionId = ElectionId(electionId)
                 database.electionIdDao.insertElectionId(toBeInsertedElectionId)
             } catch (e: Exception) {
-                Log.e(LOG_TAG, "insertElectionId, get error message")
+                Log.e(LOG_TAG, "insertSavedElection, get error message")
+                Log.e(LOG_TAG, e.message!!)
+            }
+        }
+    }
+
+    suspend fun deleteSavedElection(electionId: Int) {
+        withContext(Dispatchers.IO) {
+            try {
+                Log.d(LOG_TAG, "deleteSavedElection, try to delete election id.")
+                database.electionIdDao.deletedSavedElectionIdById(electionId)
+            } catch (e: Exception) {
+                Log.e(LOG_TAG, "deleteSavedElection, get error message")
                 Log.e(LOG_TAG, e.message!!)
             }
         }

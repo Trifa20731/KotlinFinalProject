@@ -77,19 +77,19 @@ class ElectionsViewModel(
         }
     }
 
-    /**
-     * The function to refresh the data will be shown in the UI list.
-     * */
+    /** The function will update all elections come from Internet. */
     fun refreshElectionListData() {
         Log.d(LOG_TAG, "refreshElectionListData, run.")
         _upcomingElectionShowingList.value = rawElectionsResponseList.value
     }
 
+    /** The function will update the election not in saved election list. */
     fun refreshUpcomingElectionListData() {
         Log.d(LOG_TAG, "refreshUpcomingElectionListData, run")
         _upcomingElectionShowingList.value = unsavedElectionResponseList.value
     }
 
+    /** The function will update the election in the saved election list. */
     fun refreshSavedElectionListData() {
         Log.d(LOG_TAG, "refreshSavedElectionListData, run.")
         _savedElectionShowingList.value = savedElectionResponseList.value

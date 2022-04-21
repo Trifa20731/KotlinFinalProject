@@ -32,7 +32,7 @@ class VoterInfoFragment : Fragment() {
         // Get the safe arg from the ElectionsFragment.
         val args: VoterInfoFragmentArgs = VoterInfoFragmentArgs.fromBundle(requireArguments())
         // Add ViewModel values and create ViewModel.
-        initViewModelAndLifeCycleOwner(args.argElectionId, args.argDivision)
+        initViewModelAndLifeCycleOwner(args.argElectionId, args.argDivision, args.argElectionState)
         // Initialize the click listener
         initClickListener(args.argElectionId)
 
@@ -55,16 +55,16 @@ class VoterInfoFragment : Fragment() {
 //------------------------------------- Initialization ----------------------------------------------
 
 
-    private fun initViewModelAndLifeCycleOwner(electionId: Int, division: Division) {
+    private fun initViewModelAndLifeCycleOwner(electionId: Int, division: Division, state: Int) {
         viewModelFactory = VoterInfoViewModelFactory(application, ElectionDatabase.getInstance(application))
         viewModel = ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.getElectionInfo(electionId)
+        viewModel.getElectionInfo(electionId, state)
     }
 
     private fun initClickListener(electionId: Int) {
-        binding.followToggleBtn.setOnClickListener { viewModel.insertElectionId(electionId) }
+        binding.followToggleBtn.setOnClickListener { viewModel.insertSaveElection(electionId) }
     }
 
     //TODO: Create method to load URL intents
