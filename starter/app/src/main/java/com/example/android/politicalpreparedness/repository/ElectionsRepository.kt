@@ -20,7 +20,8 @@ class ElectionsRepository(private val database: ElectionDatabase) {
     }
 
     val elections: LiveData<List<Election>> = database.electionDao.selectElections()
-    val electionIds: LiveData<List<Election>> = database.electionIdDao.selectElectionIds()
+    val savedElections: LiveData<List<Election>> = database.electionIdDao.selectSavedElections()
+    val unsavedElections: LiveData<List<Election>> = database.electionIdDao.selectUnsavedElections()
 
     suspend fun refreshElections() {
         withContext(Dispatchers.IO) {

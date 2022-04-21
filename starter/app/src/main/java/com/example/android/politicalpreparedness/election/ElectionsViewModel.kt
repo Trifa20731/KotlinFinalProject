@@ -23,7 +23,6 @@ class ElectionsViewModel(
     }
 
     private val electionsRepo: ElectionsRepository = ElectionsRepository(dataSource)
-    private val savedElectionIdList: MutableList<Int> = mutableListOf()
 
     // The navigation action to detail page.
     private val _navigateToDetail = MutableLiveData<Election?>()
@@ -34,11 +33,9 @@ class ElectionsViewModel(
     val upcomingElectionsShowingList: LiveData<List<Election>>
         get() = _upcomingElectionShowingList
 
-    private val _followedElectionShowingList = MutableLiveData<List<Election>>()
-    val followedElectionShowingList: LiveData<List<Election>>
-        get() = _followedElectionShowingList
-
-
+    private val _savedElectionShowingList = MutableLiveData<List<Election>>()
+    val savedElectionShowingList: LiveData<List<Election>>
+        get() = _savedElectionShowingList
 
     private val _stateInfoShowing = MutableLiveData<String>()
     val stateInfoShowing: LiveData<String>
@@ -54,8 +51,9 @@ class ElectionsViewModel(
     init {
         getElectionList()
     }
-    val upcomingElectionsResponseList = electionsRepo.elections
-    val followedElectionResponseList = electionsRepo.electionIds
+    val rawElectionsResponseList = electionsRepo.elections
+    val savedElectionResponseList = electionsRepo.savedElections
+    val unsavedElectionResponseList = electionsRepo.unsavedElections
 
 
 //------------------------------------- Data Retrieve Functions ------------------------------------
@@ -84,12 +82,17 @@ class ElectionsViewModel(
      * */
     fun refreshElectionListData() {
         Log.d(LOG_TAG, "refreshElectionListData, run.")
-        _upcomingElectionShowingList.value = upcomingElectionsResponseList.value
+        _upcomingElectionShowingList.value = rawElectionsResponseList.value
+    }
+
+    fun refreshUpcomingElectionListData() {
+        Log.d(LOG_TAG, "refreshUpcomingElectionListData, run")
+        _upcomingElectionShowingList.value = unsavedElectionResponseList.value
     }
 
     fun refreshSavedElectionListData() {
-        Log.d(LOG_TAG, "refreshFollowedElectionsData, run.")
-        _followedElectionShowingList.value = followedElectionResponseList.value
+        Log.d(LOG_TAG, "refreshSavedElectionListData, run.")
+        _savedElectionShowingList.value = savedElectionResponseList.value
     }
 
 

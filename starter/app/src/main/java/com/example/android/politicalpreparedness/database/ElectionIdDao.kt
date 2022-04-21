@@ -15,15 +15,18 @@ interface ElectionIdDao {
     suspend fun insertElectionId(electionId: ElectionId)
 
     @Query("SELECT * FROM election_table WHERE id IN (SELECT * FROM election_id_table) ")
-    fun selectElectionIds(): LiveData<List<Election>>
+    fun selectSavedElections(): LiveData<List<Election>>
+
+    @Query("SELECT * FROM election_table WHERE id NOT IN (SELECT * FROM election_id_table)")
+    fun selectUnsavedElections(): LiveData<List<Election>>
 
     @Query("SELECT * FROM election_id_table WHERE id = :electionId")
-    fun selectElectionId(electionId: Int): LiveData<ElectionId>
+    fun selectSavedElectionId(electionId: Int): LiveData<ElectionId>
 
     @Query("DELETE FROM election_id_table")
-    suspend fun deleteElectionIds()
+    suspend fun deleteSavedElectionIds()
 
     @Query("DELETE FROM election_id_table WHERE id = :electionId" )
-    suspend fun deletedElectionIdById(electionId: Int): Int
+    suspend fun deletedSavedElectionIdById(electionId: Int): Int
 
 }

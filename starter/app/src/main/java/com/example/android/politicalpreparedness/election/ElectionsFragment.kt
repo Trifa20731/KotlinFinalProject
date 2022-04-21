@@ -2,7 +2,6 @@ package com.example.android.politicalpreparedness.election
 
 import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,10 +78,11 @@ class ElectionsFragment: Fragment() {
 
     private fun initObserver() {
         viewModel.stateInfoShowing.observe(viewLifecycleOwner, Observer { SupportFunctions.showShortToast(application, it) })
-        viewModel.upcomingElectionsResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshElectionListData() })
-        viewModel.followedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshSavedElectionListData() })
+        //viewModel.rawElectionsResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshElectionListData() })
+        viewModel.unsavedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshUpcomingElectionListData() })
+        viewModel.savedElectionResponseList.observe(viewLifecycleOwner, Observer { viewModel.refreshSavedElectionListData() })
         viewModel.upcomingElectionsShowingList.observe(viewLifecycleOwner, Observer { electionListAdapter.addHeaderAndSubmitList(it) })
-        viewModel.followedElectionShowingList.observe(viewLifecycleOwner, Observer { followedElectionListAdapter.addHeaderAndSubmitList(it) })
+        viewModel.savedElectionShowingList.observe(viewLifecycleOwner, Observer { followedElectionListAdapter.addHeaderAndSubmitList(it) })
     }
 
 }
