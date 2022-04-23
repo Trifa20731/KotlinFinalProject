@@ -13,6 +13,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.BuildConfig
@@ -40,6 +41,9 @@ class RepresentativeFragment : Fragment() {
     private lateinit var viewModel: RepresentativeViewModel
     private lateinit var viewModelFactory: RepresentativeViewModelFactory
 
+    // ArrayAdapter to set the spinner.
+    private lateinit var arrayAdapter: ArrayAdapter<CharSequence>
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,7 +51,10 @@ class RepresentativeFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
         application = requireNotNull(this.activity).application
 
-        //TODO: Establish bindings
+        // Init view model and data binding.
+        initViewModelAndBinding()
+        // Init adapter.
+        initAdapter()
 
         //TODO: Define and assign Representative adapter
 
@@ -69,6 +76,10 @@ class RepresentativeFragment : Fragment() {
     }
 
     private fun initAdapter() {
+
+        arrayAdapter = ArrayAdapter.createFromResource(application, R.array.states, android.R.layout.simple_spinner_item)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.stateSpinner.adapter = arrayAdapter
 
     }
 
