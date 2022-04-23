@@ -7,10 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDatabase
-import com.example.android.politicalpreparedness.network.models.Division
-import com.example.android.politicalpreparedness.network.models.Election
-import com.example.android.politicalpreparedness.network.models.ElectionId
-import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
+import com.example.android.politicalpreparedness.network.models.*
 import com.example.android.politicalpreparedness.repository.ElectionsRepository
 import kotlinx.coroutines.launch
 
@@ -36,24 +33,50 @@ class VoterInfoViewModel(
     lateinit var election: LiveData<Election>
     private val electionsRepo: ElectionsRepository = ElectionsRepository(dataSource)
 
-    // Add live data to hold voter info
-    private val _voterInfoResponse = MutableLiveData<VoterInfoResponse>()
-    val voterInfoResponse: LiveData<VoterInfoResponse>
-        get() = _voterInfoResponse
-
-
     private val _electionState = MutableLiveData<Int>()
     val electionState: LiveData<Int>
         get() = _electionState
 
+    private val _voterInfoResponse = MutableLiveData<VoterInfoResponse?>()
+    val voterInfoResponse: LiveData<VoterInfoResponse?>
+        get() = _voterInfoResponse
+
+    private val _voterInfoState = MutableLiveData<State>()
+    val voterInfoState: LiveData<State>
+        get() = _voterInfoState
 
 //--------------------------------------------------------------------------------------------------
 
 
     fun getElectionInfo(electionId: Int, division: Division, state: Int) {
+
         election = dataSource.electionDao.selectElectionBySingleId(electionId)
-        Log.d(LOG_TAG, "The division is ${division.country}, ${division.state}")
         _electionState.value = state
+        val addressString = "${division.country} ${division.state}"
+        getVoterInfo(addressString, electionId.toLong())
+
+    }
+
+    private fun getVoterInfo(address: String, electionId: Long) {
+
+        viewModelScope.launch {
+            electionsRepo.refreshVoterInfo(address, electionId)?.let {
+                _voterInfoResponse.postValue(it)
+            }?:let {
+                Log.w(LOG_TAG, "return null voter response from Internet.")
+            }
+        }
+
+    }
+
+    fun updateState(voterInfo: VoterInfoResponse) {
+
+        voterInfo.state?.let {
+            _voterInfoState.value = it[0]
+        }?:let {
+            Log.w(LOG_TAG, "return null voter state from Internet.")
+        }
+
     }
 
 
@@ -64,8 +87,9 @@ class VoterInfoViewModel(
 
     //TODO: Add var and methods to support loading URLs
 
-    // Add var and methods to save and remove elections to local database
+    /** The method executes after clicking the save toggle button. */
     fun insertOrDeleteSaveElection(electionId: Int) {
+
         when (_electionState.value) {
             ELECTION_STATE_UNSAVED -> {
                 insertSavedElection(electionId)
@@ -76,10 +100,12 @@ class VoterInfoViewModel(
                 _electionState.value = ELECTION_STATE_UNSAVED
             }
         }
+
     }
 
-
+    /** The method save the election into data base. */
     private fun insertSavedElection(electionId:Int) {
+
         val toBeInsertedElectionId = ElectionId(electionId)
         viewModelScope.launch {
             try {
@@ -90,9 +116,12 @@ class VoterInfoViewModel(
                 Log.e(LOG_TAG, e.message!!)
             }
         }
+
     }
 
+    /** The method delete the saved election in the election id table. */
     private fun deleteSavedElection(electionId: Int) {
+
         viewModelScope.launch {
             try {
                 Log.d(LOG_TAG, "Delete the electionId the id is ${electionId}")
@@ -102,6 +131,7 @@ class VoterInfoViewModel(
                 Log.e(LOG_TAG, e.message!!)
             }
         }
+
     }
 
 }

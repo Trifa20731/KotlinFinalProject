@@ -6,6 +6,7 @@ import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.ElectionId
+import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -69,16 +70,15 @@ class ElectionsRepository(private val database: ElectionDatabase) {
 //------------------------------------- VoterInfo --------------------------------------------------
 
 
-    suspend fun refreshVoterInfo(address: String, electionId: Long) {
+    suspend fun refreshVoterInfo(address: String, electionId: Long): VoterInfoResponse? =
         withContext(Dispatchers.IO) {
             try {
                 Log.d(LOG_TAG, "refreshVoterInfo, try to get the voter info from Internet.")
-                val tmpResponse = CivicsApi.retrofitService.getVoterInfoListAsync(address, electionId)
+                CivicsApi.retrofitService.getVoterInfoListAsync(address, electionId)
             } catch (e: Exception) {
                 Log.e(LOG_TAG, "refreshVoterInfo, get error message.")
                 Log.e(LOG_TAG, e.message!!)
+                null
             }
         }
-    }
-
 }
