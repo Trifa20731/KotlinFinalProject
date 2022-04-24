@@ -3,15 +3,50 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
         <variable
             name="representative"
             type="com.example.android.politicalpreparedness.representative.model.Representative" />
+        <variable
+            name="clickListener"
+            type="com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_small"
+        android:onClick="@{()->clickListener.onCLick(representative)}">
+
+
+        <TextView
+            android:id="@+id/officesNameTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{representative.office.name}"/>
+
+        <TextView
+            android:id="@+id/officialsNameTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/officesNameTv"
+            android:text="@{representative.official.name}"/>
+
+        <TextView
+            android:id="@+id/officialsPartyTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/officialsNameTv"
+            android:text="@{representative.official.party}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

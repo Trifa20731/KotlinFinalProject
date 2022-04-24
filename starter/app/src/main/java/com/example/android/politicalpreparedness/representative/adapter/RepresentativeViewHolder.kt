@@ -13,16 +13,17 @@ import com.example.android.politicalpreparedness.network.models.Channel
 import com.example.android.politicalpreparedness.representative.model.Representative
 
 
-class RepresentativeViewHolder(val binding: ListItemRepresentativeBinding): RecyclerView.ViewHolder(binding.root) {
+class RepresentativeViewHolder private constructor(val binding: ListItemRepresentativeBinding): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Representative) {
         binding.representative = item
+        binding.executePendingBindings()
+
         //binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
         //TODO: Show social links ** Hint: Use provided helper methods
         //TODO: Show www link ** Hint: Use provided helper methods
 
-        binding.executePendingBindings()
     }
 
 //    private fun showSocialLinks(channels: List<Channel>) {

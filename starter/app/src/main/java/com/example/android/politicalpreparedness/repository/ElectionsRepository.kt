@@ -2,12 +2,16 @@ package com.example.android.politicalpreparedness.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.network.models.ElectionId
+import com.example.android.politicalpreparedness.network.models.RepresentativeResponse
 import com.example.android.politicalpreparedness.network.models.VoterInfoResponse
+import com.example.android.politicalpreparedness.representative.RepresentativeViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /**
@@ -81,4 +85,22 @@ class ElectionsRepository(private val database: ElectionDatabase) {
                 null
             }
         }
+
+
+//------------------------------------- Representative ---------------------------------------------
+
+
+    suspend fun refreshRepresentative(address: String): RepresentativeResponse? =
+        withContext(Dispatchers.IO) {
+            try {
+                Log.d(RepresentativeViewModel.LOG_TAG, "Fetching Representative Data.")
+                CivicsApi.retrofitService.getRepresentativesByAddressAsync(address)
+            } catch (e: java.lang.Exception) {
+                Log.e(RepresentativeViewModel.LOG_TAG, "Fetching Fail.")
+                Log.e(RepresentativeViewModel.LOG_TAG, e.message!!)
+                null
+            }
+        }
+
+
 }

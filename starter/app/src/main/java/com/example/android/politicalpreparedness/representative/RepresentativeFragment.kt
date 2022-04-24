@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.library.BuildConfig
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.utils.Constants
 import com.example.android.politicalpreparedness.R
@@ -58,6 +59,8 @@ class RepresentativeFragment : Fragment() {
         initClickListener()
         // Init adapter.
         initAdapter()
+        // Init observer function.
+        initObserver()
 
         //TODO: Define and assign Representative adapter
 
@@ -92,6 +95,13 @@ class RepresentativeFragment : Fragment() {
         arrayAdapter = ArrayAdapter.createFromResource(application, R.array.states, android.R.layout.simple_spinner_item)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.stateSpinner.adapter = arrayAdapter
+
+    }
+
+    private fun initObserver() {
+
+        viewModel.representativeResponse.observe( viewLifecycleOwner, Observer { viewModel.updateRepresentativeList(it) })
+        viewModel.representativeShowingList.observe( viewLifecycleOwner, Observer {  } )
 
     }
 

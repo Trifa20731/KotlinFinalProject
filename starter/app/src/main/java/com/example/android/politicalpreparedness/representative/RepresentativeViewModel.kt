@@ -7,13 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDatabase
-import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.network.models.RepresentativeResponse
 import com.example.android.politicalpreparedness.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.representative.model.Representative
 import com.example.android.politicalpreparedness.utils.isNetworkAvailable
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class RepresentativeViewModel(
     private val application: Application,
@@ -27,25 +26,26 @@ class RepresentativeViewModel(
     private val electionRepo: ElectionsRepository = ElectionsRepository(dataSource)
 
     // Live data for representatives and address
-    private val _representativesList = MutableLiveData<List<Representative>>()
-    val representativeList: LiveData<List<Representative>>
-        get() = _representativesList
+    private val _representativesShowingList = MutableLiveData<List<Representative>>()
+    val representativeShowingList: LiveData<List<Representative>>
+        get() = _representativesShowingList
+
+    private val _representativeResponse = MutableLiveData<RepresentativeResponse>()
+    val representativeResponse: LiveData<RepresentativeResponse>
+        get() = _representativeResponse
 
 //------------------------------------- Data Retrieve Functions ------------------------------------
 
 
+    /** The method fetch representatives from API from a provided address */
     fun retrieveRepresentativeListByAddress(address: Address) {
         val addressString = address.toFormattedString()
         val fakeAddress: String = "us la"
         Log.d(LOG_TAG, "retrieveRepresentativeListByAddress: run.")
         if (isNetworkAvailable(application)) {
             viewModelScope.launch {
-                try {
-                    Log.d(LOG_TAG, "Fetching Representative Data.")
-                    CivicsApi.retrofitService.getRepresentativesByAddressAsync(fakeAddress)
-                } catch (e: Exception) {
-                    Log.e(LOG_TAG, "Fetching Fail.")
-                    Log.e(LOG_TAG, e.message!!)
+                electionRepo.refreshRepresentative(fakeAddress)?.let {
+                    _representativeResponse.postValue(it)
                 }
             }
         } else {
@@ -53,8 +53,12 @@ class RepresentativeViewModel(
         }
     }
 
+    /** The method update the list after get the Internet Representative Response. */
+    fun updateRepresentativeList(response: RepresentativeResponse) {
 
-    //TODO: Create function to fetch representatives from API from a provided address
+    }
+
+
 
     /**
      *  The following code will prove helpful in constructing a representative from the API. This code combines the two nodes of the RepresentativeResponse into a single official :
