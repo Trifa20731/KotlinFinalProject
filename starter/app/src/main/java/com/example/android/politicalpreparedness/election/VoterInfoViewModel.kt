@@ -83,10 +83,6 @@ class VoterInfoViewModel(
 //--------------------------------------------------------------------------------------------------
 
 
-    //TODO: Add var and methods to populate voter info
-
-    //TODO: Add var and methods to support loading URLs
-
     /** The method executes after clicking the save toggle button. */
     fun insertOrDeleteSaveElection(electionId: Int) {
 
@@ -133,5 +129,6 @@ class VoterInfoViewModel(
         }
 
     }
+
 
 }

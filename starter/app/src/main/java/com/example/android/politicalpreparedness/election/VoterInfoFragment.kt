@@ -44,14 +44,6 @@ class VoterInfoFragment : Fragment() {
         // Initialize the observer function
         initObserver()
 
-        //TODO: Populate voter info -- hide views without provided data.
-        /**
-        Hint: You will need to ensure proper data is provided from previous fragment.
-        */
-
-        //TODO: Handle loading of URLs
-
-
         return binding.root
     }
 
@@ -60,11 +52,13 @@ class VoterInfoFragment : Fragment() {
 
 
     private fun initViewModelAndLifeCycleOwner(electionId: Int, division: Division, state: Int) {
+
         viewModelFactory = VoterInfoViewModelFactory(application, ElectionDatabase.getInstance(application))
         viewModel = ViewModelProvider(this, viewModelFactory).get(VoterInfoViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewModel.getElectionInfo(electionId, division, state)
+
     }
 
     private fun initClickListener(electionId: Int) {
@@ -76,8 +70,6 @@ class VoterInfoFragment : Fragment() {
         viewModel.voterInfoResponse.observe(viewLifecycleOwner, Observer { updateState(it) })
         viewModel.voterInfoState.observe(viewLifecycleOwner, Observer { updateUrl(it) })
     }
-
-    //TODO: Create method to load URL intents
 
 
 //------------------------------------- Observer Functions -----------------------------------------

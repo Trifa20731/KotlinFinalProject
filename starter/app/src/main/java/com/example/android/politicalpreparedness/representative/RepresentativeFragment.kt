@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.utils.Constants
 import com.example.android.politicalpreparedness.R
+import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import com.google.android.material.snackbar.Snackbar
@@ -53,6 +54,8 @@ class RepresentativeFragment : Fragment() {
 
         // Init view model and data binding.
         initViewModelAndBinding()
+        // Init click listener.
+        initClickListener()
         // Init adapter.
         initAdapter()
 
@@ -70,9 +73,18 @@ class RepresentativeFragment : Fragment() {
 
 
     private fun initViewModelAndBinding() {
-        viewModelFactory = RepresentativeViewModelFactory(application)
+
+        viewModelFactory = RepresentativeViewModelFactory(application, ElectionDatabase.getInstance(application))
         viewModel = ViewModelProvider(this, viewModelFactory).get(RepresentativeViewModel::class.java)
         binding.lifecycleOwner = this
+
+    }
+
+    private fun initClickListener() {
+
+        binding.findMyRepresentativeBtn.setOnClickListener { findMyRepresentative() }
+        binding.useMyLocationBtn.setOnClickListener {  }
+
     }
 
     private fun initAdapter() {
@@ -83,9 +95,23 @@ class RepresentativeFragment : Fragment() {
 
     }
 
-    private fun initClickListener() {
+
+//------------------------------------- Click Functions --------------------------------------------
+
+
+    //TODO: Change the value into dynamic one.
+    private fun findMyRepresentative() {
+
+        val addressLineOne: String = binding.addressLineOneEt.text.toString()
+        val addressLineTwo: String = binding.addressLineTwoEt.text.toString()
+        val city: String = binding.cityEt.text.toString()
+        val zip: String = binding.cityEt.text.toString()
+        val state: String = binding.stateSpinner.selectedItem.toString()
+        val address: Address = Address(addressLineOne, addressLineTwo, city, state, zip)
+        viewModel.retrieveRepresentativeListByAddress(address)
 
     }
+
 
 
 //------------------------------------- Location Permission Checking -------------------------------
