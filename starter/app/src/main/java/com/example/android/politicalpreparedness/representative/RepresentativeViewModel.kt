@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.network.models.Office
 import com.example.android.politicalpreparedness.network.models.RepresentativeResponse
 import com.example.android.politicalpreparedness.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.representative.model.Representative
@@ -55,7 +56,16 @@ class RepresentativeViewModel(
 
     /** The method update the list after get the Internet Representative Response. */
     fun updateRepresentativeList(response: RepresentativeResponse) {
-
+        Log.d(LOG_TAG, "updateRepresentativeList: Run.")
+        val representativeList = arrayListOf<Representative>()
+        val officialList = response.officials
+        val officeList = response.offices
+        officeList.forEach {
+            representativeList.addAll(it.getRepresentatives(officialList))
+        }
+        representativeList.forEach{
+            Log.d(LOG_TAG, "The office ${it.office.name} has official ${it.official.name}")
+        }
     }
 
 
