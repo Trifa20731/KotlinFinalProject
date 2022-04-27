@@ -25,6 +25,7 @@ import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
 
@@ -45,6 +46,7 @@ class RepresentativeFragment : Fragment() {
 
     // ArrayAdapter to set the spinner.
     private lateinit var arrayAdapter: ArrayAdapter<CharSequence>
+    private lateinit var representativeListAdapter: RepresentativeListAdapter
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -96,12 +98,15 @@ class RepresentativeFragment : Fragment() {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.stateSpinner.adapter = arrayAdapter
 
+        representativeListAdapter = RepresentativeListAdapter()
+        binding.representativeListRv.adapter = representativeListAdapter
+
     }
 
     private fun initObserver() {
 
         viewModel.representativeResponse.observe( viewLifecycleOwner, Observer { viewModel.updateRepresentativeList(it) })
-        viewModel.representativeShowingList.observe( viewLifecycleOwner, Observer {  } )
+        viewModel.representativeShowingList.observe( viewLifecycleOwner, Observer { representativeListAdapter.submitList(it) } )
 
     }
 

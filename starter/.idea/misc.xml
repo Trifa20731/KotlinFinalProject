@@ -7,16 +7,17 @@
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/fragment_election.xml" value="0.465625" />
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/fragment_launch.xml" value="0.25625" />
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/fragment_representative.xml" value="0.25625" />
-        <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/fragment_voter_info.xml" value="0.4632713026444662" />
+        <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/fragment_voter_info.xml" value="0.5318818040435459" />
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/list_header_elections.xml" value="0.35625" />
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/list_item_election.xml" value="0.2421875" />
-        <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/list_item_representative.xml" value="0.19605263157894737" />
+        <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/layout/list_item_representative.xml" value="0.20625" />
         <entry key="..\:/Users/jason/Desktop/Android_practice/nd940-cap-advanced-android-programming-project-starter/starter/app/src/main/res/menu/voterinfo_menu.xml" value="0.25625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.27395833333333336" />
-        <entry key="app/src/main/res/layout/fragment_election.xml" value="0.27395833333333336" />
+        <entry key="app/src/main/res/layout/fragment_election.xml" value="0.11148648648648649" />
         <entry key="app/src/main/res/layout/fragment_launch.xml" value="0.27395833333333336" />
-        <entry key="app/src/main/res/layout/fragment_representative.xml" value="0.27395833333333336" />
+        <entry key="app/src/main/res/layout/fragment_representative.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_voter_info.xml" value="0.27395833333333336" />
+        <entry key="app/src/main/res/layout/list_item_election.xml" value="0.1" />
       </map>
     </option>
   </component>

@@ -63,9 +63,7 @@ class RepresentativeViewModel(
         officeList.forEach {
             representativeList.addAll(it.getRepresentatives(officialList))
         }
-        representativeList.forEach{
-            Log.d(LOG_TAG, "The office ${it.office.name} has official ${it.official.name}")
-        }
+        _representativesShowingList.value = representativeList
     }
 
 
