@@ -21,22 +21,24 @@ class RepresentativeViewHolder private constructor(val binding: ListItemRepresen
 
         //binding.representativePhoto.setImageResource(R.drawable.ic_profile)
 
-        //TODO: Show social links ** Hint: Use provided helper methods
-        //TODO: Show www link ** Hint: Use provided helper methods
+        //Show social links ** Hint: Use provided helper methods
+        item.official.channels?.let { showSocialLinks(it) }
+        //Show www link ** Hint: Use provided helper methods
+        item.official.urls?.let { showWWWLinks(it) }
 
     }
 
-//    private fun showSocialLinks(channels: List<Channel>) {
-//        val facebookUrl = getFacebookUrl(channels)
-//        if (!facebookUrl.isNullOrBlank()) { enableLink(binding.facebookIcon, facebookUrl) }
-//
-//        val twitterUrl = getTwitterUrl(channels)
-//        if (!twitterUrl.isNullOrBlank()) { enableLink(binding.twitterIcon, twitterUrl) }
-//    }
-//
-//    private fun showWWWLinks(urls: List<String>) {
-//        enableLink(binding.wwwIcon, urls.first())
-//    }
+    private fun showSocialLinks(channels: List<Channel>) {
+        val facebookUrl = getFacebookUrl(channels)
+        if (!facebookUrl.isNullOrBlank()) { enableLink(binding.facebookIV, facebookUrl) }
+
+        val twitterUrl = getTwitterUrl(channels)
+        if (!twitterUrl.isNullOrBlank()) { enableLink(binding.twitterIV, twitterUrl) }
+    }
+
+    private fun showWWWLinks(urls: List<String>) {
+        enableLink(binding.wwwIV, urls.first())
+    }
 
     private fun getFacebookUrl(channels: List<Channel>): String? {
         return channels.filter { channel -> channel.type == "Facebook" }
@@ -50,11 +52,13 @@ class RepresentativeViewHolder private constructor(val binding: ListItemRepresen
             .firstOrNull()
     }
 
+    // Enable the link clicking function.
     private fun enableLink(view: ImageView, url: String) {
         view.visibility = View.VISIBLE
         view.setOnClickListener { setIntent(url) }
     }
 
+    // Set Intent to open url.
     private fun setIntent(url: String) {
         val uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)

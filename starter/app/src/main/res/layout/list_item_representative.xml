@@ -30,7 +30,7 @@
             android:layout_marginStart="@dimen/margin_small"
             android:layout_marginBottom="@dimen/margin_small"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/profileIV"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginStart="@dimen/margin_small"
             android:text="@{representative.official.name}"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/profileIV"
             app:layout_constraintTop_toBottomOf="@+id/officesNameTv"
             app:layout_constraintWidth_percent="0.5" />
 
@@ -54,48 +54,51 @@
             app:layout_constraintTop_toBottomOf="@+id/officialsNameTv" />
 
         <ImageButton
-            android:id="@+id/imageButton5"
+            android:id="@+id/twitterIV"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@null"
             android:scaleType="fitCenter"
+            android:visibility="invisible"
             android:layout_marginStart="@dimen/margin_small"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton7"
+            app:layout_constraintBottom_toBottomOf="@+id/wwwIV"
             app:layout_constraintEnd_toEndOf="@+id/officesNameTv"
-            app:layout_constraintStart_toEndOf="@+id/imageButton6"
-            app:layout_constraintTop_toTopOf="@+id/imageButton7"
+            app:layout_constraintStart_toEndOf="@+id/facebookIV"
+            app:layout_constraintTop_toTopOf="@+id/wwwIV"
             app:srcCompat="@drawable/ic_twitter" />
 
-        <ImageButton
-            android:id="@+id/imageButton6"
+        <ImageView
+            android:id="@+id/facebookIV"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@null"
             android:scaleType="fitCenter"
+            android:visibility="invisible"
             android:layout_marginStart="@dimen/margin_small"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButton7"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton5"
+            app:layout_constraintBottom_toBottomOf="@+id/wwwIV"
+            app:layout_constraintEnd_toStartOf="@+id/twitterIV"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageButton7"
-            app:layout_constraintTop_toTopOf="@+id/imageButton7"
+            app:layout_constraintStart_toEndOf="@+id/wwwIV"
+            app:layout_constraintTop_toTopOf="@+id/wwwIV"
             app:srcCompat="@drawable/ic_facebook" />
 
-        <ImageButton
-            android:id="@+id/imageButton7"
+        <ImageView
+            android:id="@+id/wwwIV"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@null"
             android:scaleType="fitCenter"
+            android:visibility="invisible"
             android:layout_marginStart="@dimen/margin_small"
             android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="@+id/officialsPartyTv"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton6"
+            app:layout_constraintEnd_toStartOf="@+id/facebookIV"
             app:layout_constraintStart_toEndOf="@+id/officialsNameTv"
             app:layout_constraintTop_toBottomOf="@+id/officesNameTv"
             app:srcCompat="@drawable/ic_www" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/profileIV"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:scaleType="fitCenter"
