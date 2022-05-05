@@ -9,10 +9,40 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- TODO: Add necessary styles -->
+    <!-- Toolbar -->
+    <style name="toolBarTitle">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="singleLine">true</item>
+    </style>
+
+    <!-- Image View: Round Shape -->
     <style name="roundedImageViewRounded">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- TextView: Time String (VoterInfo) -->
+    <style name="voterInfoTimeString">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <!-- TextView: Title (VoterInfo) -->
+    <style name="voterInfoTitle">
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TextView: Clickable Text (VoterInfo) -->
+    <style name="voterInfoClickableText">
+
+    </style>
+
+    <style name="mainStyleButton">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
