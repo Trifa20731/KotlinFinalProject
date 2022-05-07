@@ -1,6 +1,7 @@
 package com.example.android.politicalpreparedness.representative
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -223,7 +224,7 @@ class RepresentativeFragment : Fragment(), LocationListener {
     }
 
     private fun checkDeviceLocationSettingsAndGoToMyLocation(resolved: Boolean = true) {
-        Log.d(LOG_TAG, "Use my location to find the representative.")
+        Log.d(LOG_TAG, "checkDeviceLocationSettingsAndGoToMyLocation, run.")
         val locationRequest = LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_LOW_POWER
         }
@@ -236,6 +237,7 @@ class RepresentativeFragment : Fragment(), LocationListener {
 
         // Failure Listener
         locationSettingsResponseTask.addOnFailureListener { exception ->
+            Log.d(LOG_TAG, "Failure in location setting response task.")
             if (exception is ResolvableApiException && resolved){
                 try {
                     this.startIntentSenderForResult(
@@ -259,8 +261,17 @@ class RepresentativeFragment : Fragment(), LocationListener {
                 }.show()
             }
         }
-        locationSettingsResponseTask.addOnCompleteListener {
-            if ( it.isSuccessful ) {
+        locationSettingsResponseTask.addOnCompleteListener { response ->
+            Log.d(LOG_TAG, "Success in location setting response task.")
+            if ( response.isSuccessful ) {
+                locationManager = application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                val currentLocation: Location? = getLastUpdateLocation(locationManager)
+                currentLocation?.let {
+                    Log.d(LOG_TAG, "Get current location successfully.")
+                    geoCodeLocation(it)
+                }?:let {
+                    Log.d(LOG_TAG, "Fail to get the current location.")
+                }
             }
         }
     }
@@ -269,6 +280,22 @@ class RepresentativeFragment : Fragment(), LocationListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.REQUEST_TURN_DEVICE_LOCATION_ON) {
             checkDeviceLocationSettingsAndGoToMyLocation(false)
+        }
+    }
+
+    private fun getLastUpdateLocation (locationManager: LocationManager): Location? {
+        return if (ActivityCompat.checkSelfPermission(
+                application,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                application,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            null
+        } else {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 500.0f, this)
+            locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         }
     }
 
