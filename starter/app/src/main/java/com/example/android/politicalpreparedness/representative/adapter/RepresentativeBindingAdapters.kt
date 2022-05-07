@@ -1,18 +1,30 @@
 package com.example.android.politicalpreparedness.representative.adapter
 
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.example.android.politicalpreparedness.R
 
 @BindingAdapter("profileImage")
 fun fetchImage(view: ImageView, src: String?) {
     src?.let {
         val uri = src.toUri().buildUpon().scheme("https").build()
         // Add Glide call to load image and circle crop - user ic_profile as a placeholder and for errors.
-        Glide.with(view.context).load(uri).into(view)
+        try {
+            Glide.with(view.context)
+                .load(uri)
+                .placeholder(R.drawable.ic_profile)
+                .error(R.drawable.ic_connection_error)
+                .into(view)
+        } catch (e: Exception) {
+            Log.e("FetchImage", "Get error when using glide to fetch image.")
+            Log.e("FetchImage", e.message!!)
+            view.setImageResource(R.drawable.ic_broken_image)
+        }
     }
 }
 

@@ -62,10 +62,10 @@ class ElectionsFragment: Fragment() {
     private fun initAdapter() {
         electionListAdapter = ElectionListAdapter(
             getString(R.string.upcoming_elections_tv_label),
-            ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division, ELECTION_STATE_UPCOMING)) })
+            ElectionClickListener { election -> requireView().findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division, ELECTION_STATE_UPCOMING)) })
         savedElectionListAdapter = ElectionListAdapter(
             getString(R.string.saved_elections_tv_label),
-            ElectionClickListener { election -> view!!.findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division, ELECTION_STATE_SAVED)) })
+            ElectionClickListener { election -> requireView().findNavController().navigate(ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(election.id, election.division, ELECTION_STATE_SAVED)) })
         binding.upcomingElectionsRv.adapter = electionListAdapter
         binding.savedElectionsRv.adapter = savedElectionListAdapter
     }
