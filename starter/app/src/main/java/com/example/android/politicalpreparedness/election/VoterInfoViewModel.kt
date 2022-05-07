@@ -72,7 +72,19 @@ class VoterInfoViewModel(
     fun updateState(voterInfo: VoterInfoResponse) {
 
         voterInfo.state?.let {
-            _voterInfoState.value = it[0]
+            if (it.isNotEmpty()) {
+                val tmpVoterInfoState = it[0]
+                if (
+                    tmpVoterInfoState.electionAdministrationBody.ballotInfoUrl!=null &&
+                    tmpVoterInfoState.electionAdministrationBody.votingLocationFinderUrl!=null
+                ) {
+                    _voterInfoState.value = it[0]
+                } else {
+                    Log.w(LOG_TAG, "Null Url String in Voter Info State")
+                }
+            } else {
+                Log.w(LOG_TAG, "Empty state list.")
+            }
         }?:let {
             Log.w(LOG_TAG, "return null voter state from Internet.")
         }
