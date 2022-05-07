@@ -4,9 +4,12 @@ import android.Manifest
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -26,10 +29,14 @@ import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.material.snackbar.Snackbar
 import java.util.Locale
 
-class RepresentativeFragment : Fragment() {
+class RepresentativeFragment : Fragment(), LocationListener {
 
     companion object {
         const val LOG_TAG: String = "RepresentativeFragment"
@@ -48,6 +55,9 @@ class RepresentativeFragment : Fragment() {
     private lateinit var arrayAdapter: ArrayAdapter<CharSequence>
     private lateinit var representativeListAdapter: RepresentativeListAdapter
 
+    // Location Manager.
+    private lateinit var locationManager: LocationManager
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -63,13 +73,7 @@ class RepresentativeFragment : Fragment() {
         initAdapter()
         // Init observer function.
         initObserver()
-
-        //TODO: Define and assign Representative adapter
-
-        //TODO: Populate Representative adapter
-
         //TODO: Establish button listeners for field and location search
-
         return binding.root
     }
 
@@ -88,7 +92,7 @@ class RepresentativeFragment : Fragment() {
     private fun initClickListener() {
 
         binding.findMyRepresentativeBtn.setOnClickListener { findMyRepresentative() }
-        binding.useMyLocationBtn.setOnClickListener {  }
+        binding.useMyLocationBtn.setOnClickListener { checkLocationPermissions() }
 
     }
 
@@ -111,10 +115,10 @@ class RepresentativeFragment : Fragment() {
     }
 
 
-//------------------------------------- Click Functions --------------------------------------------
+//------------------------------------- Find Representative Functions ------------------------------
 
 
-    //TODO: Change the value into dynamic one.
+    /** The function retrieve the representative list after entering the data in the EditText. */
     private fun findMyRepresentative() {
 
         val addressLineOne: String = binding.addressLineOneEt.text.toString()
@@ -155,6 +159,7 @@ class RepresentativeFragment : Fragment() {
         } else {
             checkLocationPermissions()
         }
+
     }
 
     private fun checkLocationPermissions(): Boolean {
@@ -162,7 +167,7 @@ class RepresentativeFragment : Fragment() {
         Log.d(LOG_TAG, "checkLocationPermissions: run.")
         return if (isPermissionGranted()) {
             Log.d(LOG_TAG, "The Permission Granted.")
-            getLocation()
+            checkDeviceLocationSettingsAndGoToMyLocation()
             true
         } else {
             Log.d(LOG_TAG, "The Permission Deny.")
@@ -217,23 +222,95 @@ class RepresentativeFragment : Fragment() {
 
     }
 
-    private fun getLocation() {
-        //TODO: Get location from LocationServices
-        //TODO: The geoCodeLocation method is a helper function to change the lat/long location to a human readable street address
+    private fun checkDeviceLocationSettingsAndGoToMyLocation(resolved: Boolean = true) {
+        Log.d(LOG_TAG, "Use my location to find the representative.")
+        val locationRequest = LocationRequest.create().apply {
+            priority = LocationRequest.PRIORITY_LOW_POWER
+        }
+
+        // Add the geofencing tasks.
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+        val settingsClient = LocationServices.getSettingsClient(requireActivity())
+        val locationSettingsResponseTask =
+            settingsClient.checkLocationSettings(builder.build())
+
+        // Failure Listener
+        locationSettingsResponseTask.addOnFailureListener { exception ->
+            if (exception is ResolvableApiException && resolved){
+                try {
+                    this.startIntentSenderForResult(
+                        exception.resolution.intentSender,
+                        Constants.REQUEST_TURN_DEVICE_LOCATION_ON,
+                        null,
+                        0,
+                        0,
+                        0,
+                        null
+                    )
+                } catch (sendEx: IntentSender.SendIntentException) {
+                    Log.d(LOG_TAG, "Error getting location settings resolution: " + sendEx.message)
+                }
+            } else {
+                Snackbar.make(
+                    binding.representativeMotionLayout,
+                    R.string.location_required_error, Snackbar.LENGTH_INDEFINITE
+                ).setAction(android.R.string.ok) {
+                    checkDeviceLocationSettingsAndGoToMyLocation()
+                }.show()
+            }
+        }
+        locationSettingsResponseTask.addOnCompleteListener {
+            if ( it.isSuccessful ) {
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constants.REQUEST_TURN_DEVICE_LOCATION_ON) {
+            checkDeviceLocationSettingsAndGoToMyLocation(false)
+        }
     }
 
     private fun geoCodeLocation(location: Location): Address {
+
         val geocoder = Geocoder(context, Locale.getDefault())
         return geocoder.getFromLocation(location.latitude, location.longitude, 1)
                 .map { address ->
                     Address(address.thoroughfare, address.subThoroughfare, address.locality, address.adminArea, address.postalCode)
                 }
                 .first()
+
+    }
+
+
+//------------------------------------- Location Listener Override Functions -----------------------
+
+
+    override fun onLocationChanged(location: Location) {
+        Log.d(LOG_TAG, "onLocationChanged: Run.")
+        val address = geoCodeLocation(location)
+        Log.d(LOG_TAG, "The location address string is ${address.toFormattedString()}")
+    }
+
+    override fun onProviderEnabled(provider: String) {
+        Log.d(LOG_TAG, "onProviderEnable: run.")
+    }
+
+    override fun onProviderDisabled(provider: String) {
+        Log.d(LOG_TAG, "onProviderDisabled: run.")
+        checkDeviceLocationSettingsAndGoToMyLocation()
+    }
+
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        Log.d(LOG_TAG, "onStatusChanged: run.")
     }
 
     private fun hideKeyboard() {
+
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+
     }
 
 }

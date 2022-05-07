@@ -40,12 +40,12 @@ class RepresentativeViewModel(
 
     /** The method fetch representatives from API from a provided address */
     fun retrieveRepresentativeListByAddress(address: Address) {
-        val addressString = address.toFormattedString()
-        val fakeAddress: String = "us la"
         Log.d(LOG_TAG, "retrieveRepresentativeListByAddress: run.")
+        val addressString = address.toFormattedString()
+        Log.d(LOG_TAG, "The address string is $addressString")
         if (isNetworkAvailable(application)) {
             viewModelScope.launch {
-                electionRepo.refreshRepresentative(fakeAddress)?.let {
+                electionRepo.refreshRepresentative(addressString)?.let {
                     _representativeResponse.postValue(it)
                 }
             }
@@ -78,9 +78,6 @@ class RepresentativeViewModel(
     Note: _representatives in the above code represents the established mutable live data housing representatives
 
      */
-
-    //TODO: Create function get address from geo location
-
     //TODO: Create function to get address from individual fields
 
 }
