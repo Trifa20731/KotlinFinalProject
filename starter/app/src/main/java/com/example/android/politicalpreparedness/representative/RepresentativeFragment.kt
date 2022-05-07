@@ -30,6 +30,7 @@ import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
+import com.example.android.politicalpreparedness.representative.adapter.setNewValue
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -129,6 +130,16 @@ class RepresentativeFragment : Fragment(), LocationListener {
         val state: String = binding.stateSpinner.selectedItem.toString()
         val address: Address = Address(addressLineOne, addressLineTwo, city, state, zip)
         viewModel.retrieveRepresentativeListByAddress(address)
+
+    }
+
+    private fun autoFillEditText(address: Address) {
+
+        binding.addressLineOneEt.setText(address.line1)
+        address.line2?.let { binding.addressLineTwoEt.setText(address.line2) }
+        binding.cityEt.setText(address.city)
+        binding.zipEt.setText(address.zip)
+        binding.stateSpinner.setNewValue(address.state)
 
     }
 
@@ -317,7 +328,8 @@ class RepresentativeFragment : Fragment(), LocationListener {
     override fun onLocationChanged(location: Location) {
         Log.d(LOG_TAG, "onLocationChanged: Run.")
         val address = geoCodeLocation(location)
-        Log.d(LOG_TAG, "The location address string is ${address.toFormattedString()}")
+        autoFillEditText(address)
+        viewModel.retrieveRepresentativeListByAddress(address)
     }
 
     override fun onProviderEnabled(provider: String) {
