@@ -14,26 +14,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp" />
         <Constraint
             android:id="@+id/addressLineOneEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/search_title"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="8dp" />
         <Constraint
             android:id="@+id/addressLineTwoEt"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@id/addressLineOneEt"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" />
         <Constraint
             android:id="@+id/cityEt"
             app:layout_constraintEnd_toStartOf="@id/stateSpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/addressLineTwoEt"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp" />
         <Constraint
             android:id="@+id/stateSpinner"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,30 +51,39 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@id/cityEt"
-            app:layout_constraintTop_toTopOf="@id/cityEt" />
+            app:layout_constraintTop_toTopOf="@id/cityEt"
+            android:layout_marginEnd="8dp" />
         <Constraint
             android:id="@+id/zipEt"
             app:layout_constraintEnd_toEndOf="@id/cityEt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/cityEt"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp" />
         <Constraint
             android:id="@+id/findMyRepresentativeBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/zipEt" />
+            app:layout_constraintTop_toBottomOf="@id/zipEt"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
         <Constraint
             android:id="@+id/useMyLocationBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/findMyRepresentativeBtn" />
+            app:layout_constraintTop_toBottomOf="@id/findMyRepresentativeBtn"
+            android:layout_marginTop="8dp" />
         <Constraint
             android:id="@+id/representative_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/useMyLocationBtn"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp" />
         <Constraint
             android:id="@+id/representativeListRv"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +91,11 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/representative_title"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp" />
         <Constraint
             android:id="@+id/list_placeholder"
             android:layout_width="match_parent"
@@ -147,7 +170,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/useMyLocationBtn"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp" />
         <Constraint
             android:id="@+id/representativeListRv"
             app:layout_constraintEnd_toEndOf="parent"
@@ -156,7 +181,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/representative_title"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp" />
         <Constraint
             android:id="@+id/list_placeholder"
             android:layout_width="match_parent"

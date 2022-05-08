@@ -9,17 +9,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Image View: Round Shape -->
+    <style name="roundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <!-- Toolbar -->
     <style name="toolBarTitle">
         <item name="android:background">@color/colorPrimaryDark</item>
         <item name="titleTextColor">@color/white</item>
         <item name="singleLine">true</item>
-    </style>
-
-    <!-- Image View: Round Shape -->
-    <style name="roundedImageViewRounded">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
     </style>
 
     <!-- TextView: Time String (VoterInfo) -->
@@ -37,6 +37,11 @@
     <!-- TextView: Clickable Text (VoterInfo) -->
     <style name="voterInfoClickableText">
 
+    </style>
+
+    <style name="listHeader">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="mainStyleButton">
