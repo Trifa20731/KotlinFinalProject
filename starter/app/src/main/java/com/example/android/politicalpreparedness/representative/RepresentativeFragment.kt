@@ -75,7 +75,6 @@ class RepresentativeFragment : Fragment(), LocationListener {
         initAdapter()
         // Init observer function.
         initObserver()
-        //TODO: Establish button listeners for field and location search
         return binding.root
     }
 

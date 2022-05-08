@@ -78,6 +78,6 @@ class RepresentativeViewModel(
     Note: _representatives in the above code represents the established mutable live data housing representatives
 
      */
-    //TODO: Create function to get address from individual fields
+
 
 }
