@@ -25,7 +25,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
         <Constraint
             android:id="@+id/addressLineTwoEt"
             android:layout_width="match_parent"
@@ -33,7 +34,8 @@
             app:layout_constraintTop_toBottomOf="@id/addressLineOneEt"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp" />
         <Constraint
             android:id="@+id/cityEt"
             app:layout_constraintEnd_toStartOf="@id/stateSpinner"
@@ -52,6 +54,7 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@id/cityEt"
             app:layout_constraintTop_toTopOf="@id/cityEt"
+            android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp" />
         <Constraint
             android:id="@+id/zipEt"
@@ -67,7 +70,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/zipEt"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
         <Constraint
@@ -75,7 +80,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/findMyRepresentativeBtn"
-            android:layout_marginTop="8dp" />
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp" />
         <Constraint
             android:id="@+id/representative_title"
             android:layout_width="wrap_content"

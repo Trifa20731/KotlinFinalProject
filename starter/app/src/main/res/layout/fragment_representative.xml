@@ -23,6 +23,8 @@
             style="@style/listHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/representative_search_tv_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,9 +35,13 @@
             android:id="@+id/addressLineOneEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:autofillHints=""
             android:hint="@string/address_line_one_hint"
             android:inputType="textPostalAddress"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_title" />
 
@@ -44,10 +50,14 @@
         <EditText
             android:id="@+id/addressLineTwoEt"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:autofillHints=""
             android:hint="@string/address_line_two_hint"
             android:inputType="textPostalAddress"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/addressLineOneEt" />
 
@@ -57,6 +67,9 @@
             android:id="@+id/cityEt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:autofillHints=""
             android:hint="@string/city_hint"
             android:inputType="textPostalAddress"
@@ -71,6 +84,8 @@
             android:id="@+id/stateSpinner"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:autofillHints=""
             android:inputType="textPostalAddress"
             app:layout_constraintBottom_toBottomOf="@id/cityEt"
@@ -84,6 +99,8 @@
             android:id="@+id/zipEt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:autofillHints=""
             android:hint="@string/zip_hint"
             android:inputType="number"
@@ -98,7 +115,12 @@
             style="@style/mainStyleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/find_my_representative_btn_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/zipEt" />
 
         <!-- Add visual styling and content -->
@@ -107,7 +129,12 @@
             style="@style/mainStyleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/use_my_location_btn_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/findMyRepresentativeBtn" />
 
         <!-- Add visual styling and content -->
@@ -116,6 +143,8 @@
             style="@style/listHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
             android:text="@string/my_representative_tv_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/useMyLocationBtn" />
@@ -125,6 +154,10 @@
             android:id="@+id/representativeListRv"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:padding="@dimen/padding_small"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
