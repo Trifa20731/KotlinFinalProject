@@ -35,7 +35,9 @@
     <!-- Exception Message -->
     <string name="unknown_view_model_exception">Unknown View Model class when create main VM.</string>
 
+    <!-- Navigation Graph -->
     <!-- Fragment Label -->
+    <string name="label_navigation_graph">nav_graph</string>
     <string name="label_fragment_launch">fragment_launch</string>
     <string name="label_fragment_representative">fragment_representative</string>
     <string name="label_fragment_voter_info">fragment_voter_info</string>
