@@ -99,8 +99,8 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profileIV"
-            android:layout_width="65dp"
-            android:layout_height="66dp"
+            android:layout_width="@dimen/width_profile_image"
+            android:layout_height="@dimen/height_profile_image"
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -64,7 +64,8 @@ class RepresentativeFragment : Fragment(), LocationListener {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
+        //binding = DataBindingUtil.inflate(inflater, R.layout.fragment_representative, container, false)
+        binding = FragmentRepresentativeBinding.inflate(inflater, container, false)
         application = requireNotNull(this.activity).application
 
         // Init view model and data binding.
@@ -157,7 +158,7 @@ class RepresentativeFragment : Fragment(), LocationListener {
             (requestCode == Constants.REQUEST_FOREGROUND_AND_BACKGROUND_PERMISSION_RESULT_CODE && grantResults[Constants.BACKGROUND_LOCATION_PERMISSION_INDEX] == PackageManager.PERMISSION_DENIED))
         {
             // Permission denied.
-            Snackbar.make(this.requireView(), R.string.permission_denied_explanation, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(activity!!.findViewById(R.id.content), R.string.permission_denied_explanation, Snackbar.LENGTH_INDEFINITE)
                 .setAction(R.string.settings) {
                     // Displays App settings screen.
                     // The BuildConfig.APPLICATION_ID has been replaced by BuildConfig.LIBRARY_PACKAGE_NAME
